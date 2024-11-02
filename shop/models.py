@@ -9,7 +9,10 @@ class Category(models.Model) :
 
     class Meta :
 
-        odering = ['date_added']
+        ordering = ['date_added']
+
+    def __str__(self) -> str:
+        return self.name
 
 
 
@@ -21,9 +24,12 @@ class Product(models.Model) :
     image = models.CharField(max_length=5000)
     date_added = models.DateTimeField(auto_now=True)
 
-    Category = models.ForeignKey(Category, related_name='category', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='category', on_delete=models.CASCADE)
 
     class Meta :
 
-        odering = ['date_added']
+        ordering = ['-date_added']
+
+    def __str__(self) -> str:
+        return self.title
     

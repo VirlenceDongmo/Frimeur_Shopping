@@ -1,0 +1,56 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <form class="card card-sm">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col">
+                        <input type="search" name="item-name" placeholder="Rechercher un article..." class="form-control form-control-borderless">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success">Rechercher</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for product in product_object %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{product.image}}" alt="Image de l'arcticle" class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-title">{{product.tile}}</div>
+                        <div class="card-text">{{product.price}} FCFA</div>
+                        <button class="btn btn-warning">Description</button>
+                        <button class="btn btn-success">Acheter</button>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-3 offset-md-4">
+            <ul class="pagination">
+                {% if product_object.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{product_object.previous_page_number}}"> Précédent</a>
+                    </li>
+                {% endif %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{product_object.number}}">{{product_object.number}}</a>
+                </li>
+                {% if product_object.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{product_object.next_page_number}}"> Suivant</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %} 
+        
