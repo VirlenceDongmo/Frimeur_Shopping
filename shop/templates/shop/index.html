@@ -23,7 +23,7 @@
                 <div class="card">
                     <img width="300px" height="300px" src="{{product.image}}" alt="Image de l'arcticle" class="card-img-top">
                     <div class="card-body">
-                        <div class="card-title">{{product.tile}}</div>
+                        <div id="aa{{product.id}}" class="card-title">{{product.title}}</div>
                         <div class="card-text">{{product.price}} FCFA</div>
                         <a href="{{product.id}} " class="btn btn-warning">Description</a>
                         <button id="{{product.id}}" class="btn ted btn-success">Ajouter</button>
@@ -68,18 +68,36 @@
             var item_id = this.id.toString()
             console.log(item_id)
             if(Panier[item_id] != undefined){
-                Panier[item_id] = Panier[item_id] + 1
+                quantite = Panier[item_id][0] + 1
+                Panier[item_id][0] = quantite
             }else{
-                Panier[item_id] = 1
+                quantite = 1
+                nom = document.getElementById("aa"+item_id).innerHTML
+                Panier[item_id] = [quantite, nom]
             }
             console.log(Panier)
             localStorage.setItem('Panier', JSON.stringify(Panier))
             document.getElementById("Panier").innerHTML = "Panier = " + Object.keys(Panier).length
         });
-        $(function () {
+        
+        AfficherList(Panier)
+
+        function AfficherList(panier){
+            var panierString = ""
+            panierString += "<h5>Voici votre liste d'articles sélectionnés :</h5>"
+            var index = 1
+            for(var x in panier){
+                panierString += "Article " + index + " :"
+                panierString += document.getElementById("aa"+x).innerHTML + " :"+ " Quantité = " + panier[x][0] + "</br>"
+                index++
+            }
+
+            panierString += "<a href='/checkout' class='btn btn-primary'>Voir le panier</a>"
+
             $('[data-toggle="popover"]').popover()
-            document.getElementById("Panier").setAttribute('data-content', "<h5>Voici la liste d'articles que vous avez sélectionnés et que vous souhaitez acheter :</h5>")
-        })
+            document.getElementById("Panier").setAttribute('data-content', panierString)
+        }
+
     </script>
 
 {% endblock %}
