@@ -4,28 +4,9 @@
 
     <div class="row">
         <div class="col-md-12">
+            <h3 class="text-center">Voici votre liste d'articles sélectionnés</h3>
             <ol class="list-group list-group-numbered" id="item-list">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">Subheading</div>
-                    Content for list item
-                </div>
-                <span class="badge text-bg-primary rounded-pill">14</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">Subheading</div>
-                    Content for list item
-                </div>
-                <span class="badge text-bg-primary rounded-pill">14</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">Subheading</div>
-                    Content for list item
-                </div>
-                <span class="badge text-bg-primary rounded-pill">14</span>
-                </li>
+                
             </ol>
         </div>
     </div>
@@ -34,6 +15,31 @@
 
 {% block js %}
 
-    <script></script>
+    <script type="text/javascript">
+
+        if(localStorage.getItem('panier') == null){
+            var panier = {}
+        }else{
+            panier = JSON.parse(localStorage.getItem('panier'))
+        }
+        for(item in panier){
+            let nom = panier[item][1]
+            let quantite = panier[item][0]
+            let itemString = 
+            `
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">
+                            ${nom}
+                            <span class="badge badge-primary rounded-pill">nombre d'articles = ${quantite}</span> 
+                        </div>
+                        
+                    </div>
+                </li>
+            `
+            $('#item-list').append(itemString)
+        }
+
+    </script>
 
 {% endblock %}

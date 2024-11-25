@@ -58,29 +58,29 @@
 
     <script type="text/javascript">
         console.log("Virlence");
-        if(localStorage.getItem('Panier') == null){
-            var Panier = {}
+        if(localStorage.getItem('panier') == null){
+            var panier = {}
         }else{
-            Panier = JSON.parse(localStorage.getItem('Panier'));
+            panier = JSON.parse(localStorage.getItem('panier'));
         }
         $(document).on('click','.ted', function(){
             console.log('devhack');
             var item_id = this.id.toString()
             console.log(item_id)
-            if(Panier[item_id] != undefined){
-                quantite = Panier[item_id][0] + 1
-                Panier[item_id][0] = quantite
+            if(panier[item_id] != undefined){
+                quantite = panier[item_id][0] + 1 
+                panier[item_id][0] = quantite
             }else{
                 quantite = 1
                 nom = document.getElementById("aa"+item_id).innerHTML
-                Panier[item_id] = [quantite, nom]
+                panier[item_id] = [quantite, nom]
             }
-            console.log(Panier)
-            localStorage.setItem('Panier', JSON.stringify(Panier))
-            document.getElementById("Panier").innerHTML = "Panier = " + Object.keys(Panier).length
+            console.log(panier)
+            localStorage.setItem('panier', JSON.stringify(panier))
+            document.getElementById("panier").innerHTML = "panier = " + Object.keys(panier).length
         });
         
-        AfficherList(Panier)
+        AfficherList(panier)
 
         function AfficherList(panier){
             var panierString = ""
@@ -95,7 +95,7 @@
             panierString += "<a href='/checkout' class='btn btn-primary'>Voir le panier</a>"
 
             $('[data-toggle="popover"]').popover()
-            document.getElementById("Panier").setAttribute('data-content', panierString)
+            document.getElementById("panier").setAttribute('data-content', panierString)
         }
 
     </script>
