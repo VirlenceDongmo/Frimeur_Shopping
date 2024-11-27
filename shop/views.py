@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Product, Commande
+from .models import Product, Commande, Category
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 # Create your views here.
 
@@ -55,3 +56,24 @@ def confirmation(request) :
         nom = item.nom
 
     return render(request,"shop/confirmation.html", {'name':nom})
+
+
+def categorie(request, foo) :
+
+    foo = foo.replace('-',' ')
+
+    try :
+        categorie = Category.objects.get(name = foo)
+        products = Product.objects.filter(category = categorie)
+
+        paginator = Paginator(products, 4)
+        page = request.GET.get('page')
+
+        products = paginator.get_page(page)
+
+        return render(request, "shop/categories.html",{'products':products, 'categorie':categorie})
+    
+    except :
+        
+        return redirect ('home')
+    
