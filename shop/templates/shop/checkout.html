@@ -11,6 +11,62 @@
         </div>
     </div>
 
+    <div>
+        <br> <br>
+        <h5 class="text-center">Pour commander, veuillez remplir et soumettre le formulaire ci-dessous.</h5>
+        <br> <br>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input type="hidden" id="items" name="items">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail4">Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword4">Email</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress">Adresse</label>
+                  <input type="text" class="form-control" id="adresse" name="adresse">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputCity">Ville</label>
+                    <input type="text" class="form-control" id="ville" name="ville">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState">Pays</label>
+                    <select id="pays" name="pays" class="form-control">
+                      <option selected>Cameroun</option>
+                      <option>Tchad</option>
+                      <option>Benin</option>
+                      <option>Bukina Faso</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input name="zipcode" id = "zipcode" type="text" class="form-control" id="inputZip">
+                  </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Somme totale </label>
+                    <input name="total" id = "total" type="readonly" class="form-control bg-dark text-warning" id="inputZip">
+                  </div>
+                <button type="submit" class="btn btn-primary">Commander</button>
+                <br>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block js %}
@@ -22,23 +78,45 @@
         }else{
             panier = JSON.parse(localStorage.getItem('panier'))
         }
+        var total = 0
+        var nombre = 0
         for(item in panier){
             let nom = panier[item][1]
             let quantite = panier[item][0]
-            let itemString = 
-            `
-                <li class="list-group-item d-flex justify-content-between align-items-start">
+            let prix = panier[item][2]
+            nombre += quantite
+            total += prix 
+            let itemString = `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">
                             ${nom}
-                            <span class="badge badge-primary rounded-pill">nombre d'articles = ${quantite}</span> 
                         </div>
-                        
                     </div>
+                    <span class="badge badge-primary rounded-pill">nombre d'articles = ${quantite}</span>
+                    <span class="badge badge-warning rounded-pill">prix = ${prix} FCFA</span>
                 </li>
-            `
-            $('#item-list').append(itemString)
+            `;
+            $('#item-list').append(itemString);
         }
+
+
+        let itemNombre = `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">
+                            <h5 class="bg-danger">PRIX ET NOMBRES D'ARTICLES TOTAUX </h5>
+                        </div>
+                    </div>
+                    <span class="badge badge-danger rounded-pill">nombre d'articles total = ${nombre}</span>
+                    <span class="badge badge-danger rounded-pill">prix total = ${total} FCFA</span>
+                </li>
+            `;
+        $('#item-list').append(itemNombre);
+
+        $('#total').val(total + "FCFA")
+
+        $('#items').val(JSON.stringify(panier))
 
     </script>
 
