@@ -38,10 +38,10 @@ def checkout(request) :
         adresse = request.POST.get('adresse')
         ville = request.POST.get('ville')
         pays = request.POST.get('pays')
-        zipcode = request.POST.get('zipcode')
         items = request.POST.get('items')
+        user = request.user
 
-        com = Commande(items = items, total = total, nom = nom, email = email, adresse = adresse, ville = ville, pays = pays, zipcode = zipcode)
+        com = Commande(items = items, total = total, nom = nom, email = email, adresse = adresse, ville = ville, pays = pays,user = user)
         com.save()
 
         return redirect('confirmation')

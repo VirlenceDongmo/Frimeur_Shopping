@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Hello {{user.email}}, ici c'est votre profile. <br> Vous pouvez le conserver ou le modifier</h1>
+    <div class="row">
+        <p>
+            Email : {{user.user.email}}
+        </p>
+        <p>
+            Annivaissaire : {{user.birthday}}
+        </p>
+        <div style="max-height: 80;">
+            Photo de profile :
+            <img width="80" height="80"
+            src="{% if user.profile_image %}
+                    {{user.profile_image.url}}
+                {% endif %}
+            " 
+            alt="photo de profile">
+        </div>
+    </div>
+    <div>
+        <a href="{% url 'edit_profile' %}">Modifier mon profile</a>
+    </div>
+{% endblock %}
