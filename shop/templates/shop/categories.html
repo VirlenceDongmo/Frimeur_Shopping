@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <form class="card card-sm">
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col">
@@ -17,13 +17,15 @@
         </div>
     </div>
     <br>
-    <h1 class="text-center">Bienvenue sur la page des {{categorie}}</h1>
+    <h1 class="text-center" style="color: white;">Bienvenue sur la page des {{categorie}}s</h1>
     <br>
     <div class="row">
         {% for product in products %}
             <div class="col-md-3">
                 <div class="card">
-                    <img width="300px" height="300px" src="{{product.image}}" alt="Image de l'arcticle" class="card-img-top">
+                    <img src="{{ product.image.url }}" alt="Image de l'article" class="card-img-top rounded-custom" style="width: 100%; height: auto; .rounded-custom {
+                        border-radius: 25%;
+                    }">
                     <div class="card-body">
                         <div id="aa{{product.id}}" class="card-title">{{product.title}}</div>
                         <div id="price{{product.id}}" class="card-text">{{product.price}} <span>FCFA</span></div>

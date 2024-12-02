@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Product, Commande, Category
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -35,14 +36,43 @@ def checkout(request) :
         nom = request.POST.get('nom')
         total = request.POST.get('total')
         email = request.POST.get('email')
-        adresse = request.POST.get('adresse')
+        localisation = request.POST.get('localisation')
         ville = request.POST.get('ville')
         pays = request.POST.get('pays')
         items = request.POST.get('items')
+        tel = request.POST.get('tel')
         user = request.user
 
-        com = Commande(items = items, total = total, nom = nom, email = email, adresse = adresse, ville = ville, pays = pays,user = user)
+        com = Commande(items = items, total = total, nom = nom, email = email, localisation = localisation, ville = ville, pays = pays, tel = tel, user_id = user)
         com.save()
+
+        # Envoyer un email
+
+        subject = 'Nouvelle commande'
+        message = f"""
+        Une nouvelle commande a été passée par {nom} depuis Frimeur-Shopping.
+
+        Détails de la commande :
+
+        - Email du commanditaire : {email}
+
+        - Localisation du commanditaire : {localisation}
+
+        - Ville de résidence du commanditaire : {ville}
+
+        - Pays de résidence du commanditaire : {pays}
+
+        - Numéro de téléphone du commanditaire : {tel}
+
+        - Somme totale des commandes : {total}
+
+        - Articles : {items}
+
+        """
+        from_email = 'dongmovirlence@gmail.com'
+        recipient_list = ['dongmofeudjio5@gmail.com']
+
+        send_mail(subject, message, from_email, recipient_list)
 
         return redirect('confirmation')
 

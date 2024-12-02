@@ -4,7 +4,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h3 class="text-center">Voici votre liste d'articles sélectionnés</h3>
+            <br> <br>
+            <h3 class="text-center" style="color: white;">Voici votre liste d'articles sélectionnés</h3>
+            <br> <br>
             <ol class="list-group list-group-numbered" id="item-list">
                 
             </ol>
@@ -13,54 +15,58 @@
 
     <div>
         <br> <br>
-        <h5 class="text-center">Pour commander, veuillez remplir et soumettre le formulaire ci-dessous.</h5>
+        <h5 class="text-center" style="color: white;">Pour commander, veuillez remplir et soumettre le formulaire ci-dessous.</h5>
         <br> <br>
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <form method="POST">
-
                 {% csrf_token %}
-
                 <input type="hidden" id="items" name="items">
                 <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Nom</label>
-                    <input type="text" class="form-control" id="nom" name="nom">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Email</label>
-                    <input name="email" id = "email" type="email" class="form-control" placeholder="{{request.user.email}}">
-                  </div>
+                    <div class="form-group col-md-6">
+                        <label for="nom" style="color: white;">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email" style="color: white;">Email</label>
+                        <input name="email" id="email" type="email" class="form-control" value="{{request.user.email}}">
+                    </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputAddress">Adresse</label>
-                  <input type="text" class="form-control" id="adresse" name="adresse">
+                    <label for="adresse" style="color: white;">Localisation</label>
+                    <input type="text" class="form-control" id="localisation" name="localisation">
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputCity">Ville</label>
-                    <input type="text" class="form-control" id="ville" name="ville">
-                  </div>
-                  <div class="form-group col-md-4">
-                    <label for="inputState">Pays</label>
-                    <select id="pays" name="pays" class="form-control">
-                      <option selected>Cameroun</option>
-                      <option>Tchad</option>
-                      <option>Benin</option>
-                      <option>Bukina Faso</option>
-                    </select>
-                  </div>
-                <div class="form-group col-md-2">
-                    <label for="total">Somme totale </label>
-                    <input name="total" type="readOnly" class="form-control bg-dark text-warning" id="total">
-                  </div>
+                    <div class="form-group col-md-6">
+                        <label for="ville" style="color: white;">Ville</label>
+                        <input type="text" class="form-control" id="ville" name="ville">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="pays" style="color: white;">Pays</label>
+                        <select id="pays" name="pays" class="form-control">
+                            <option selected >Cameroun</option>
+                            <!--<option>Tchad</option>
+                            <option>Benin</option>
+                            <option>Burkina Faso</option>-->
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ville" style="color: white;">Numéro de téléphone</label>
+                        <input type="text" class="form-control" id="tel" name="tel">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="total" style="color: white;">Somme totale</label>
+                        <input name="total" type="text" class="form-control bg-dark text-warning" id="total" readonly>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary">Commander</button>
                 <br>
             </form>
         </div>
     </div>
+    
 
 {% endblock %}
 
@@ -88,15 +94,18 @@
                             ${nom}
                         </div>
                     </div>
-                    <span class="badge badge-primary rounded-pill">nombre d'articles = ${quantite}</span>
-                    <span class="badge badge-warning rounded-pill">prix = ${prix} FCFA</span>
+                    <div class="d-flex justify-content-center flex-grow-1">
+                        <span class="badge badge-primary rounded-pill" style="color: black;">nombre d'articles = ${quantite}</span>
+                    </div>
+                    <span class="badge badge-warning rounded-pill bg-dark text-warning" style="color: black; padding: 15px;">prix = ${prix} FCFA</span>
                 </li>
             `;
             $('#item-list').append(itemString);
+
         }
 
 
-        let itemNombre = `
+        /*let itemNombre = `
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">
@@ -107,7 +116,7 @@
                     <span class="badge badge-danger rounded-pill">prix total = ${total} FCFA</span>
                 </li>
             `;
-        $('#item-list').append(itemNombre);
+        $('#item-list').append(itemNombre); */
 
 
         $('#total').val(total + "FCFA")
