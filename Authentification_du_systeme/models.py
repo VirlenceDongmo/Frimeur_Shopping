@@ -19,8 +19,9 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    nom = models.CharField(max_length=30)
+    prenom = models.CharField(max_length=30)
+    telephone = models.CharField(max_length=9)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -28,19 +29,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['nom', 'prenom', 'telephone']
 
     def __str__(self):
-        return self.email
+        return self.nom
 
-
-class Profile(models.Model) :
+class Profile(models.Model):
     bio = models.TextField(max_length=200, blank=True, null=True)
-    profile_image = models.ImageField(upload_to = 'media', blank=True)
+    profile_image = models.ImageField(upload_to='media', blank=True)
     birthday = models.DateField(blank=True, null=True)
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
-    def __str__(self) :
-        return 'profile de %s' % self.user.email
-
+    def __str__(self):
+        return 'profile de %s' % self.user.nom

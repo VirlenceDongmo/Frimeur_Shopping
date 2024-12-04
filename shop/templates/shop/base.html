@@ -20,12 +20,6 @@
             margin: 0; 
         }
 
-
-        body {
-            display: flex;
-            flex-direction: column; /* Permet de contrôler la disposition */
-        }
-
         .custom-container {
             flex: 1; /* Permet au conteneur principal de prendre tout l'espace disponible */
         }
@@ -51,9 +45,88 @@
         nav {
             background-color: blue; /* Couleur de fond sombre */
         }
+
         footer {
             width: 100%;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        thead {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tbody {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        th {
+            padding: 12px;
+        }
+
+        form {
+            background-color: #34495e; /* Couleur de fond du formulaire */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .classeLabel {
+            color: #ecf0f1; /* Couleur des labels */
+            margin-top: 15px;
+        }
+
+        .classInput {
+            width: 1200px;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #2980b9; /* Bordure des champs */
+            transition: border-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #3498db; /* Couleur de fond du bouton */
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: green ; /* Couleur de fond au survol */
+        }
+
+        .form-row {
+            margin-bottom: 15px; /* Espacement entre les lignes du formulaire */
+        }
+
+        .bg-dark {
+            background-color: #34495e !important; /* Couleur de fond pour le champ de total */
+        }
+
+        .text-warning {
+            color: #f1c40f !important; /* Couleur du texte pour le champ de total */
+        }
+
     </style>
 </head>
 <body>
@@ -80,7 +153,7 @@
                                 </div>
                               </li>
                               <li class="nav-item">
-                                <a id="panier" href="{% url 'panier' %}" class="btn btn-secondary" data-container="body" data-toggle="popover" data-html="true" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                                <a id="panier" href="{% url 'panier' %}" class="btn btn-secondary" data-container="body">
                                 Panier = 0
                                 </a>
                               </li>

@@ -42,11 +42,12 @@ class Commande(models.Model) :
     total = models.CharField(max_length=300)
     nom = models.CharField(max_length=300)
     email = models.EmailField()
-    localisation = models.CharField(max_length=200)
+    adresseDeLivraison = models.CharField(max_length=200)
     ville = models.CharField(max_length=200)
     pays = models.CharField(max_length=300)
     date_commande = models.DateTimeField(auto_now=True)
     tel = models.BigIntegerField()
+    paiement = models.CharField(max_length=300)
 
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="commande")
 

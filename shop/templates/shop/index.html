@@ -21,7 +21,7 @@
         {% for product in product_object %}
             <div class="col-md-3">
                 <div class="card">
-                    <img src="{{ product.image }}" alt="Image de l'article" class="card-img-top rounded-custom" style="width: 100%; height: auto; .rounded-custom {
+                    <img src="{{ product.image }}" alt="Image de l'article" class="card-img-top rounded-custom" style="width: 250px; height: 200px; .rounded-custom {
                         border-radius: 25%;
                     }">
                     <div class="card-body">
@@ -66,7 +66,6 @@
             panier = JSON.parse(localStorage.getItem('panier'));
         }
         $(document).on('click','.ted', function(){
-            console.log('devhack');
             var item_id = this.id.toString()
             console.log(item_id)
             if(panier[item_id] != undefined){
@@ -88,7 +87,6 @@
 
         function AfficherList(panier){
             var panierString = ""
-            panierString += "<h5>Voici votre liste d'articles sélectionnés :</h5>"
             var index = 1
             for(var x in panier){
                 panierString += "Article " + index + " :"
@@ -96,7 +94,7 @@
                 index++
             }
 
-            panierString += "<a href='{% url 'panier' %}' class='btn btn-primary'>Voir le panier</a>"
+            //panierString += "<a href='{% url 'panier' %}' class='btn btn-primary'>Voir le panier</a>"
 
             $('[data-toggle="popover"]').popover()
             document.getElementById("panier").setAttribute('data-content', panierString)

@@ -26,26 +26,26 @@
                 <input type="hidden" id="items" name="items">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="nom" style="color: white;">Nom</label>
-                        <input type="text" class="form-control" id="nom" name="nom">
+                        <label for="nom" style="color: white;" class="classeLabel">Noms et prénoms</label>
+                        <input type="text" class="form-control classInput" id="nom" name="nom" value="{{request.user.nom}} {{request.user.prenom}}">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="email" style="color: white;">Email</label>
-                        <input name="email" id="email" type="email" class="form-control" value="{{request.user.email}}">
+                        <label for="email" style="color: white;" class="classeLabel">Email</label>
+                        <input name="email" id="email" type="email" class="form-control classInput" value="{{request.user.email}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="adresse" style="color: white;">Localisation</label>
-                    <input type="text" class="form-control" id="localisation" name="localisation">
+                    <label for="adresse" style="color: white;" class="classeLabel">Adresse de livraison</label>
+                    <input type="text" class="form-control classInput" id="adresseDeLivraison" name="adresseDeLivraison">
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="ville" style="color: white;">Ville</label>
-                        <input type="text" class="form-control" id="ville" name="ville">
+                        <label for="ville" style="color: white;" class="classeLabel">Ville</label>
+                        <input type="text" class="form-control classInput" id="ville" name="ville">
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="pays" style="color: white;">Pays</label>
-                        <select id="pays" name="pays" class="form-control">
+                        <label for="pays" style="color: white;" class="classeLabel">Pays</label>
+                        <select id="pays" name="pays" class="form-control classInput">
                             <option selected >Cameroun</option>
                             <!--<option>Tchad</option>
                             <option>Benin</option>
@@ -53,11 +53,17 @@
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="ville" style="color: white;">Numéro de téléphone</label>
-                        <input type="text" class="form-control" id="tel" name="tel">
+                        <label for="ville" style="color: white;" class="classeLabel">Numéro de téléphone</label>
+                        <input type="text" class="form-control classInput" id="tel" name="tel" value="{{request.user.telephone}}">
                     </div>
+                    <label for="paiement" style="color: white;" class="classeLabel">Mode de paiement</label>
+                        <select id="paiement" name="paiement" class="form-control classInput">
+                            <option selected>Cliquez pour choisir</option>
+                            <option>MTN Mobile Money</option>
+                            <option>Orange Money</option>
+                        </select>
                     <div class="form-group col-md-2">
-                        <label for="total" style="color: white;">Somme totale</label>
+                        <label for="total" style="color: white;" class="classeLabel">Somme totale</label>
                         <input name="total" type="text" class="form-control bg-dark text-warning" id="total" readonly>
                     </div>
                 </div>
@@ -66,6 +72,7 @@
             </form>
         </div>
     </div>
+    <br><br>
     
 
 {% endblock %}
@@ -81,29 +88,41 @@
         }
         var total = 0
         var nombre = 0
+
+        let tableString = `
+            <table>
+                <thead>
+                    <tr>
+                        <td>Nom</td>
+                        <td>Quantité</td>
+                        <td>Prix (FCFA)</td>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
         for(item in panier){
             let nom = panier[item][1]
             let quantite = panier[item][0]
             let prix = panier[item][2]
             nombre += quantite
-            total += prix 
-            let itemString = `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">
-                            ${nom}
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center flex-grow-1">
-                        <span class="badge badge-primary rounded-pill" style="color: black;">nombre d'articles = ${quantite}</span>
-                    </div>
-                    <span class="badge badge-warning rounded-pill bg-dark text-warning" style="color: black; padding: 15px;">prix = ${prix} FCFA</span>
-                </li>
-            `;
-            $('#item-list').append(itemString);
+            total += prix
 
+            tableString += `
+                <tr>
+                    <td>${nom}</td>
+                    <td>${quantite}</td>
+                    <td>${prix}</td>
+                </tr>
+            `;
         }
 
+        tableString += `
+                </tbody>
+            </table>
+        `;
+
+        $('#item-list').append(tableString);
 
         /*let itemNombre = `
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -117,7 +136,6 @@
                 </li>
             `;
         $('#item-list').append(itemNombre); */
-
 
         $('#total').val(total + "FCFA")
 

@@ -1,59 +1,52 @@
-{% extends "base.html" %}
+{% extends "shop/base.html" %}
 
 {% block content %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <div class="container px-5 my-5">
         <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="." method="POST">
             {% csrf_token %}
             <!--<div class="form-floating mb-3">
-                <input class="form-control" id="nomDutilisateur" type="text" placeholder="Nom d'utilisateur" data-sb-validations="required" />
+                <input class="form-control" id="nomDutilisateur" type="text" placeholder="Nom d'utilisateur" />
                 {{user_form.username}}
                 <label for="{{user_form.username.id_for_label}}">Nom d'utilisateur</label>
                 <div class="invalid-feedback" data-sb-feedback="nomDutilisateur:required">Nom d&#x27;utilisateur is required.</div>
-            </div>
-            <div class="form-floating mb-3">
-                <input class="form-control" id="nom" type="text" placeholder="Nom" data-sb-validations="required" />
-                {{user_form.first_name}}
-                <label for="{{user_form.username.id_for_label}}">Nom</label>
-                <div class="invalid-feedback" data-sb-feedback="nom:required">Nom is required.</div>
-            </div>
-            <div class="form-floating mb-3">
-                <input class="form-control" id="prenom" type="text" placeholder="Prenom" data-sb-validations="required" />
-                {{user_form.last_name}}
-                <label for="{{user_form.last_name.id_for_label}}">Prénom</label>
-                <div class="invalid-feedback" data-sb-feedback="prenom:required">Prenom is required.</div>
             </div>-->
-            <div class="form-floating mb-3">
-                <!--<input class="form-control" id="email" type="email" placeholder="Email " data-sb-validations="required,email" />-->
-                {{user_form.email}}
-                <label for="{{user_form.email.id_for_label}}">Email </label>
-                <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
-                <div class="invalid-feedback" data-sb-feedback="email:email">Email Email is not valid.</div>
-            </div>
-            <div class="form-floating mb-3">
-                <!--<input class="form-control" id="motDePass" type="password" placeholder="Mot de pass" data-sb-validations="required" />-->
-                {{user_form.password}}
-                <label for="{{user_form.password.id_for_label}}">Mot de pass</label>
-                <div class="invalid-feedback" data-sb-feedback="motDePass:required">Mot de pass is required.</div>
-            </div>
-            <div class="form-floating mb-3">
-                <!--<input class="form-control" id="motDePassDeConfirmation" type="password" placeholder="Mot de pass de confirmation" data-sb-validations="required" />-->
-                {{user_form.confirm_password}}
-                <label for="{{user_form.confirm_password.id_for_label}}">Mot de pass de confirmation</label>
-                <div class="invalid-feedback" data-sb-feedback="motDePassDeConfirmation:required">Mot de pass de confirmation is required.</div>
-            </div>
-            <div class="d-none" id="submitSuccessMessage">
-                <div class="text-center mb-3">
-                    <div class="fw-bolder">Form submission successful!</div>
-                    <p>To activate this form, sign up at</p>
-                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                </div>
-            </div>
-            <div class="d-none" id="submitErrorMessage">
-                <div class="text-center text-danger mb-3">Error sending message!</div>
-            </div>
+
+            <label for="nom" class="classeLabel">Nom</label>
+            <input class="form-control" id="nom" type="text" name="nom"/>
+            <!--{{user_form.first_name}}-->
+            
+            <label for="prenom" class="classeLabel">Prénom</label>
+            <input class="form-control" id="prenom" type="text" name="prenom"/>
+            <!--{{user_form.last_name}}-->   
+            
+            <label for="email" class="classeLabel">Email </label>
+            <input class="form-control" id="email" type="email" name="email"/>
+            <!--{{user_form.email}}-->
+
+            <label for="telephone" class="classeLabel">Numéro de téléphone</label>
+            <input class="form-control" id="nom" type="number" />
+            <!--{{user_form.telephone}}-->
+ 
+            <label for="motDePass" class="classeLabel">Mot de pass</label>
+            <input class="form-control" id="motDePass" type="password" />
+            <!--{{user_form.password}}-->
+
+            <label for="motDePassDeConfirmation" class="classeLabel">Mot de pass de confirmation</label>
+            <!--{{user_form.confirm_password}}-->
+            <input class="form-control" id="motDePassDeConfirmation" type="password" name="motDePassDeConfirmation"/>
+            <br>
+
             <div class="d-grid">
-                <button class="btn btn-primary btn-lg" id="submitButton" type="submit">S'insrire</button>
+                <button class="btn btn-primary btn-lg" id="submitButton" type="submit">S'inscrire</button>
             </div>
         </form>
     </div>

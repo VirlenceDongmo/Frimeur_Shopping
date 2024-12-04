@@ -36,14 +36,15 @@ def checkout(request) :
         nom = request.POST.get('nom')
         total = request.POST.get('total')
         email = request.POST.get('email')
-        localisation = request.POST.get('localisation')
+        adresseDeLivraison = request.POST.get('adresseDeLivraison')
         ville = request.POST.get('ville')
         pays = request.POST.get('pays')
         items = request.POST.get('items')
         tel = request.POST.get('tel')
         user = request.user
+        paiement = request.POST.get('paiement')
 
-        com = Commande(items = items, total = total, nom = nom, email = email, localisation = localisation, ville = ville, pays = pays, tel = tel, user_id = user)
+        com = Commande(items = items, total = total, nom = nom, email = email, adresseDeLivraison = adresseDeLivraison, ville = ville, pays = pays, tel = tel, paiement = paiement, user_id = user)
         com.save()
 
         # Envoyer un email
@@ -56,7 +57,7 @@ def checkout(request) :
 
         - Email du commanditaire : {email}
 
-        - Localisation du commanditaire : {localisation}
+        - Adresse de livraison : {adresseDeLivraison}
 
         - Ville de résidence du commanditaire : {ville}
 
@@ -65,6 +66,8 @@ def checkout(request) :
         - Numéro de téléphone du commanditaire : {tel}
 
         - Somme totale des commandes : {total}
+
+        - Mode de paiement : {paiement}
 
         - Articles : {items}
 
