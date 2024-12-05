@@ -3,6 +3,7 @@ from .models import Product, Commande, Category
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -30,6 +31,7 @@ def detail(request, myid) :
     return render(request, "shop/detail.html", {'product':product_object})
 
 
+@login_required(login_url='login_view')
 def checkout(request) :
 
     if(request.method == "POST") :

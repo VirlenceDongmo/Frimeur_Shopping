@@ -3,11 +3,14 @@
 {% block content %}
 
     {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
+        <br>
+        <div class="text-center">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endif %}
 
     <div class="container px-5 my-5">
@@ -33,11 +36,11 @@
             <!--{{user_form.email}}-->
 
             <label for="telephone" class="classeLabel">Numéro de téléphone</label>
-            <input class="form-control" id="nom" type="number" />
+            <input class="form-control" id="telephone" name="telephone" type="text" />
             <!--{{user_form.telephone}}-->
  
             <label for="motDePass" class="classeLabel">Mot de pass</label>
-            <input class="form-control" id="motDePass" type="password" />
+            <input class="form-control" id="motDePass" name="motDePass" type="password" />
             <!--{{user_form.password}}-->
 
             <label for="motDePassDeConfirmation" class="classeLabel">Mot de pass de confirmation</label>

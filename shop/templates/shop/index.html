@@ -28,7 +28,7 @@
                         <div id="aa{{product.id}}" class="card-title">{{product.title}}</div>
                         <div id="price{{product.id}}" class="card-text">{{product.price}} <span>FCFA</span></div>
                         <a href="{{product.id}} " class="btn btn-warning">Description</a>
-                        <button id="{{product.id}}" class="btn ted btn-success">Acheter</button>
+                        <button id="{{product.id}}" class="btn ted btn-success" data-image="{{ product.image }}">Ajouter</button>
                     </div>
                 </div>
             </div>
@@ -65,22 +65,39 @@
         }else{
             panier = JSON.parse(localStorage.getItem('panier'));
         }
+
+        function updatePanierCount() {
+            document.getElementById("panier").innerHTML = "Panier = " + Object.keys(panier).length;
+        }
+
+        updatePanierCount();
+
         $(document).on('click','.ted', function(){
+
             var item_id = this.id.toString()
+            var imageUrl = $(this).data('image')
+
             console.log(item_id)
+
             if(panier[item_id] != undefined){
                 quantite = panier[item_id][0] + 1 
                 panier[item_id][0] = quantite
                 panier[item_id][2] += parseFloat(document.getElementById('price'+item_id).innerHTML)
+                panier[item_id][3] = imageUrl
             }else{
                 quantite = 1
                 prix = parseFloat(document.getElementById('price'+item_id).innerHTML)
                 nom = document.getElementById("aa"+item_id).innerHTML
-                panier[item_id] = [quantite, nom, prix]
+                panier[item_id] = [quantite, nom, prix, imageUrl]
             }
             console.log(panier)
             localStorage.setItem('panier', JSON.stringify(panier))
+
+            updatePanierCount();
+
             document.getElementById("panier").innerHTML = "Panier = " + Object.keys(panier).length
+
+
         });
         
         AfficherList(panier)

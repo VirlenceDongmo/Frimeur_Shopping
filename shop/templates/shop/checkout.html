@@ -79,40 +79,59 @@
 
 {% block js %}
 
-    <script type="text/javascript">
+<script type="text/javascript">
+    if(localStorage.getItem('panier') == null){
+        var panier = {};
+    } else {
+        panier = JSON.parse(localStorage.getItem('panier'));
+    }
 
-        if(localStorage.getItem('panier') == null){
-            var panier = {}
-        }else{
-            panier = JSON.parse(localStorage.getItem('panier'))
-        }
-        var total = 0
-        var nombre = 0
+    function updatePanierCount() {
+        document.getElementById("panier").innerHTML = "Panier = " + Object.keys(panier).length;
+    }
+
+    updatePanierCount();
+
+    function renderTable() {
+        let total = 0;
+        let nombre = 0;
 
         let tableString = `
             <table>
                 <thead>
                     <tr>
-                        <td>Nom</td>
+                        <td>Image</td>
                         <td>Quantité</td>
                         <td>Prix (FCFA)</td>
+                        <td>Action</td>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
-        for(item in panier){
-            let nom = panier[item][1]
-            let quantite = panier[item][0]
-            let prix = panier[item][2]
-            nombre += quantite
-            total += prix
+        for(let item in panier){
+            let nom = panier[item][1];
+            let quantite = panier[item][0];
+            let prix = panier[item][2];
+            let imageUrl = panier[item][3]; // Supposons que l'URL de l'image est stockée dans la 4ème position (index 3)
+
+            let prixTotal = quantite * prix; // Calcul du prix total pour cet article
+            
+            nombre += quantite;
+            total += prixTotal; // Ajout du prix total à la somme totale
 
             tableString += `
                 <tr>
-                    <td>${nom}</td>
+                    <td>
+                        <div> ${nom}</div>
+                        <div><img src="${imageUrl}" style="width: 100px; height: auto;"></div>
+                    </td>
                     <td>${quantite}</td>
-                    <td>${prix}</td>
+                    <td>${prixTotal}</td>
+                    <td>
+                        <span><button class="btn btn-success add-quantity" data-id="${item}">Augmenter</button></span>
+                        <span><button class="btn btn-danger reduce-quantity" data-id="${item}">Réduire</button></span>
+                    </td>
                 </tr>
             `;
         }
@@ -120,27 +139,41 @@
         tableString += `
                 </tbody>
             </table>
+            <div>
+                Total: <span id="total">${total} FCFA</span>
+            </div>
         `;
 
-        $('#item-list').append(tableString);
+        $('#item-list').html(tableString); // Remplace le contenu de l'élément avec id item-list
+        updatePanierCount(); // Met à jour le compteur du panier
+    }
 
-        /*let itemNombre = `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">
-                            <h5 class="bg-danger">PRIX ET NOMBRES D'ARTICLES TOTAUX </h5>
-                        </div>
-                    </div>
-                    <span class="badge badge-danger rounded-pill">nombre d'articles total = ${nombre}</span>
-                    <span class="badge badge-danger rounded-pill">prix total = ${total} FCFA</span>
-                </li>
-            `;
-        $('#item-list').append(itemNombre); */
+    renderTable(); // Appelle la fonction pour afficher le tableau au chargement
 
-        $('#total').val(total + "FCFA")
+    // Event listener pour réduire la quantité
+    $(document).on('click', '.reduce-quantity', function() {
+        let item_id = $(this).data('id'); // Récupère l'ID de l'article
+        if (panier[item_id]) {
+            panier[item_id][0]--; // Réduit la quantité
+            if (panier[item_id][0] <= 0) {
+                delete panier[item_id]; // Supprime l'article si la quantité est 0
+            }
+            localStorage.setItem('panier', JSON.stringify(panier)); // Enregistre les modifications dans localStorage
+            renderTable(); // Rendu du tableau mis à jour
+        }
+    });
 
-        $('#items').val(JSON.stringify(panier))
+    $(document).on('click', '.add-quantity', function(){
+        let item_id = $(this).data('id');
+        if (panier[item_id]) {
+            panier[item_id][0]++;
+        }
+        localStorage.setItem('panier', JSON.stringify(panier));
+        renderTable();
+    });
 
-    </script>
+    $('#total').val(total + "FCFA");
+    $('#items').val(JSON.stringify(panier));
+</script>
 
 {% endblock %}

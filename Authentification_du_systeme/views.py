@@ -35,11 +35,8 @@ def logout_view(request) :
     return redirect('home')
 
 
-def register_view(request) :
-
-    if request.method == 'POST' :
-        #user_form = RegistrationForm(request.POST)
-
+def register_view(request):
+    if request.method == 'POST':
         nom = request.POST.get('nom')
         prenom = request.POST.get('prenom')
         email = request.POST.get('email')
@@ -47,31 +44,30 @@ def register_view(request) :
         motDePass = request.POST.get('motDePass')
         motDePassDeConfirmation = request.POST.get('motDePassDeConfirmation')
 
-        if motDePass != motDePassDeConfirmation :
-
-            messages.error(request, "Le mot de pass de confirmation ne correspond pas à votre mot de pass")
-
+        if not nom or not prenom or not email or not telephone or not motDePass or not motDePassDeConfirmation:
+            messages.error(request, "Tous les champs doivent être remplis.")
             return render(request, 'registration/register.html')
-        
-        else :
 
-            new_user = CustomUser(email=email, nom=nom, prenom = prenom, telephone = telephone)
-            new_user.save()
-            new_user.set_password(motDePass)
-            new_user.save()
+        if CustomUser.objects.filter(email=email).exists():
+            messages.error(request, "Cet email a déjà été utilisé, veuillez entrer un autre.")
+            return render(request, 'registration/register.html')
+            
+        if CustomUser.objects.filter(telephone=telephone).exists():
+            messages.error(request, "Ce numéro de téléphone a déjà été utilisé, veuillez entrer un autre.")
+            return render(request, 'registration/register.html')
 
-            return redirect('home')
+        if motDePass != motDePassDeConfirmation:
+            messages.error(request, "Le mot de passe de confirmation ne correspond pas au mot de passe entré.")
+            return render(request, 'registration/register.html')
 
-        #if user_form.is_valid() :
-        #    new_user = user_form.save(commit=False)
-        #    new_user.set_password(user_form.cleaned_data['password'])
-        #    new_user.save()
-        #    Profile.objects.create(user=new_user)
-        #    return redirect('login_view')
-        #else :
-        #    return render(request,'registration/register.html')
-    
-    return render(request,'registration/register.html')
+        new_user = CustomUser(email=email, nom=nom, prenom=prenom, telephone=telephone)
+        new_user.set_password(motDePass)
+        new_user.save()  
+
+        messages.success(request, "Inscription réussie ! Vous pouvez vous connecter.")
+        return redirect('login_view')
+
+    return render(request, 'registration/register.html')
 
 
 @login_required

@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="{% static '/css/styles.css' %}">-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frimeur-Shopping</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
@@ -16,7 +16,6 @@
             color: black;
             font-family: 'Arial', sans-serif;
             background-color: blue;
-            height: 100%; /* Assurer que le corps prend toute la hauteur */
             margin: 0; 
         }
 
@@ -34,16 +33,12 @@
             background-color: blue; /* Couleur de fond de la navbar */
         }
 
-        .navbar-brand, .nav-link {
-            color: white; /* Couleur du texte (blanc) */
-        }
-
-        .navbar-brand:hover, .nav-link:hover {
-            color: lightgray; /* Couleur au survol */
-        }
-
         nav {
             background-color: blue; /* Couleur de fond sombre */
+        }
+
+        .blanc {
+            color: white;
         }
 
         footer {
@@ -127,13 +122,104 @@
             color: #f1c40f !important; /* Couleur du texte pour le champ de total */
         }
 
+        .messages {
+            list-style-type: none; /* Retrait des puces */
+            padding: 0; /* Retrait du padding */
+            margin: 20px 0; /* Espacement autour de la liste */
+        }
+
+        .messages li {
+            margin: 10px 0; /* Espacement entre les messages */
+            padding: 15px; /* Espacement intérieur pour le message */
+            border-radius: 5px; /* Coins arrondis */
+            display: inline-block; /* Pour que le fond s'ajuste à la taille du texte */
+            width: auto; /* Laisse la largeur s'ajuster au contenu */
+        }
+
+        .messages .error {
+            background-color: #f8d7da; /* Couleur de fond pour les erreurs */
+            color: #721c24; /* Couleur du texte pour les erreurs */
+        }
+
+        .messages .success {
+            background-color: #d4edda; /* Couleur de fond pour le succès */
+            color: #155724; /* Couleur du texte pour le succès */
+        }
+
+        <!-- separation-->
+
+        .navbar {
+            padding: 1rem 2rem; /* Espacement interne */
+        }
+
+        .blanc {
+            font-size: 1rem; /* Taille de la police pour le nom de la marque */
+            font-weight: bold; /* Texte en gras */
+            color: white; /* Couleur du texte */
+            transition: color 0.3s; /* Animation douce pour le survol */
+        }
+
+        .navbar-brand:hover {
+            color: #0056b3; /* Couleur au survol */
+        }
+
+        .nav-link {
+            color: #555; /* Couleur des liens */
+            transition: color 0.3s; /* Animation douce pour le survol */
+        }
+
+        .nav-link:hover {
+            color: #007bff; /* Couleur au survol */
+            text-decoration: underline; /* Soulignement */
+        }
+
+        .dropdown-menu {
+            background-color: #ffffff; /* Couleur de fond pour le menu déroulant */
+            border-radius: 8px; /* Coins arrondis */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre pour le menu */
+        }
+
+        .dropdown-item {
+            color: #333; /* Couleur des éléments du menu déroulant */
+        }
+
+        .dropdown-item:hover {
+            background-color: #007bff; /* Couleur de fond au survol */
+            color: white; /* Couleur du texte au survol */
+        }
+
+        .btn-secondary {
+            background-color: rgb(241, 241, 172); /* Couleur du bouton du panier */
+            color: black;
+            border: none; /* Pas de bordure */
+            transition: background-color 0.3s; /* Animation douce pour le survol */
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Couleur au survol */
+        }
+
+        .nav-item {
+            margin-left: 15px; /* Espacement entre les éléments de la nav */
+        }
+
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 0.5rem 1rem; /* Réduction de l'espacement sur les petits écrans */
+            }
+
+            .nav-item {
+                margin-left: 10px; /* Ajustement de l'espacement sur les petits écrans */
+            }
+        }
+
     </style>
 </head>
 <body>
     <div class="custom-container">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-light">
+                <nav class="navbar navbar-expand-lg navbar-light blanc">
                     <a class="navbar-brand" href="{% url 'home' %}">Frimeur-Shopping</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
@@ -162,7 +248,22 @@
                               <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
                               <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
                           {% else %}
-                              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li> 
+                              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Catégories
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                  <a class="dropdown-item" href="{% url 'home' %}">Tous les articles</a>
+                                  <a class="dropdown-item" href="{% url 'categorie' 'Sac' %}">Sacs</a>
+                                  <a class="dropdown-item" href="{% url 'categorie' 'Montre' %}">Montres</a>
+                                </div>
+                              </li>
+                              <li class="nav-item">
+                                <a id="panier" href="{% url 'panier' %}" class="btn btn-secondary" data-container="body">
+                                Panier = 0
+                                </a>
+                              </li> 
                               <li class="nav-item"><a class="nav-link" href="{% url 'register_view' %}">Inscription</a></li>
                               <li class="nav-item"><a class="nav-link" href="{% url 'login_view' %}">Connexion</a></li> 
                               <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
@@ -171,7 +272,7 @@
                           {% endif %}
                       </ul>
                     </div>
-                  </nav>
+                </nav>
             </div>
         </div>
         {% block content %}{% endblock %}
