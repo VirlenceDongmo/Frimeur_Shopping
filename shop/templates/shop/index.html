@@ -72,32 +72,22 @@
 
         updatePanierCount();
 
-        $(document).on('click','.ted', function(){
-
-            var item_id = this.id.toString()
-            var imageUrl = $(this).data('image')
-
-            console.log(item_id)
-
-            if(panier[item_id] != undefined){
-                quantite = panier[item_id][0] + 1 
-                panier[item_id][0] = quantite
-                panier[item_id][2] += parseFloat(document.getElementById('price'+item_id).innerHTML)
-                panier[item_id][3] = imageUrl
-            }else{
-                quantite = 1
-                prix = parseFloat(document.getElementById('price'+item_id).innerHTML)
-                nom = document.getElementById("aa"+item_id).innerHTML
-                panier[item_id] = [quantite, nom, prix, imageUrl]
+        $(document).on('click', '.ted', function() {
+            var item_id = this.id.toString();
+            var imageUrl = $(this).data('image');
+            
+            if (panier[item_id] != undefined) {
+                // Si l'article existe déjà, augmentez simplement la quantité
+                panier[item_id][0]++; // Augmentez la quantité
+            } else {
+                // Si c'est un nouvel article, ajoutez-le au panier
+                var prix = parseFloat(document.getElementById('price' + item_id).innerHTML);
+                var nom = document.getElementById("aa" + item_id).innerHTML;
+                panier[item_id] = [1, nom, prix, imageUrl]; // Initialise la quantité à 1
             }
-            console.log(panier)
-            localStorage.setItem('panier', JSON.stringify(panier))
-
+            
+            localStorage.setItem('panier', JSON.stringify(panier));
             updatePanierCount();
-
-            document.getElementById("panier").innerHTML = "Panier = " + Object.keys(panier).length
-
-
         });
         
         AfficherList(panier)

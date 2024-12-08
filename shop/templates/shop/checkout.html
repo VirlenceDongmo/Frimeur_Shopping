@@ -57,14 +57,19 @@
                         <input type="text" class="form-control classInput" id="tel" name="tel" value="{{request.user.telephone}}">
                     </div>
                     <label for="paiement" style="color: white;" class="classeLabel">Mode de paiement</label>
-                        <select id="paiement" name="paiement" class="form-control classInput">
-                            <option selected>Cliquez pour choisir</option>
-                            <option>MTN Mobile Money</option>
-                            <option>Orange Money</option>
-                        </select>
+                    <div class="form-control classInput">
+                        <div>
+                            <input type="radio" id="mtn" name="paiement" value="MTN Mobile Money">
+                            <label for="mtn" style="color: black;">MTN Mobile Money</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="orange" name="paiement" value="Orange Money">
+                            <label for="orange" style="color: black;">Orange Money</label>
+                        </div>
+                    </div>
                     <div class="form-group col-md-2">
                         <label for="total" style="color: white;" class="classeLabel">Somme totale</label>
-                        <input name="total" type="text" class="form-control bg-dark text-warning" id="total" readonly>
+                        <input name="total" type="text" class="form-control bg-dark text-warning" id="total1" readonly>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Commander</button>
@@ -79,101 +84,103 @@
 
 {% block js %}
 
-<script type="text/javascript">
-    if(localStorage.getItem('panier') == null){
-        var panier = {};
-    } else {
-        panier = JSON.parse(localStorage.getItem('panier'));
-    }
+    <script type="text/javascript">
 
-    function updatePanierCount() {
-        document.getElementById("panier").innerHTML = "Panier = " + Object.keys(panier).length;
-    }
-
-    updatePanierCount();
-
-    function renderTable() {
-        let total = 0;
-        let nombre = 0;
-
-        let tableString = `
-            <table>
-                <thead>
-                    <tr>
-                        <td>Image</td>
-                        <td>Quantité</td>
-                        <td>Prix (FCFA)</td>
-                        <td>Action</td>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        for(let item in panier){
-            let nom = panier[item][1];
-            let quantite = panier[item][0];
-            let prix = panier[item][2];
-            let imageUrl = panier[item][3]; // Supposons que l'URL de l'image est stockée dans la 4ème position (index 3)
-
-            let prixTotal = quantite * prix; // Calcul du prix total pour cet article
-            
-            nombre += quantite;
-            total += prixTotal; // Ajout du prix total à la somme totale
-
-            tableString += `
-                <tr>
-                    <td>
-                        <div> ${nom}</div>
-                        <div><img src="${imageUrl}" style="width: 100px; height: auto;"></div>
-                    </td>
-                    <td>${quantite}</td>
-                    <td>${prixTotal}</td>
-                    <td>
-                        <span><button class="btn btn-success add-quantity" data-id="${item}">Augmenter</button></span>
-                        <span><button class="btn btn-danger reduce-quantity" data-id="${item}">Réduire</button></span>
-                    </td>
-                </tr>
-            `;
-        }
-
-        tableString += `
-                </tbody>
-            </table>
-            <div>
-                Total: <span id="total">${total} FCFA</span>
-            </div>
-        `;
-
-        $('#item-list').html(tableString); // Remplace le contenu de l'élément avec id item-list
-        updatePanierCount(); // Met à jour le compteur du panier
-    }
-
-    renderTable(); // Appelle la fonction pour afficher le tableau au chargement
-
-    // Event listener pour réduire la quantité
-    $(document).on('click', '.reduce-quantity', function() {
-        let item_id = $(this).data('id'); // Récupère l'ID de l'article
-        if (panier[item_id]) {
-            panier[item_id][0]--; // Réduit la quantité
-            if (panier[item_id][0] <= 0) {
-                delete panier[item_id]; // Supprime l'article si la quantité est 0
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem('panier') == null) {
+                var panier = {};
+            } else {
+                panier = JSON.parse(localStorage.getItem('panier'));
             }
-            localStorage.setItem('panier', JSON.stringify(panier)); // Enregistre les modifications dans localStorage
-            renderTable(); // Rendu du tableau mis à jour
-        }
-    });
 
-    $(document).on('click', '.add-quantity', function(){
-        let item_id = $(this).data('id');
-        if (panier[item_id]) {
-            panier[item_id][0]++;
-        }
-        localStorage.setItem('panier', JSON.stringify(panier));
-        renderTable();
-    });
+            function updatePanierCount() {
+                document.getElementById("panier").innerHTML = "Panier = " + Object.keys(panier).length;
+            }
 
-    $('#total').val(total + "FCFA");
-    $('#items').val(JSON.stringify(panier));
-</script>
+            updatePanierCount();
+
+            function renderTable() {
+                let total = 0;
+                let tableString = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Image</td>
+                                <td>Quantité</td>
+                                <td>Prix</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                for (let item in panier) {
+                    let nom = panier[item][1];
+                    let quantite = panier[item][0];
+                    let prix = parseFloat(panier[item][2]);
+
+                    let prixTotal = quantite * prix; 
+                    total += prixTotal; 
+
+                    tableString += `
+                        <tr>
+                            <td>
+                                <div>${nom}</div>
+                                <div><img src="${panier[item][3]}" style="width: 100px; height: auto;"></div>
+                            </td>
+                            <td>${quantite}</td>
+                            <td>${prixTotal.toFixed(2)} FCFA</td>
+                            <td>
+                                <span><button class="btn btn-success add-quantity" data-id="${item}">Augmenter</button></span>
+                                <span><button class="btn btn-danger reduce-quantity" data-id="${item}">Réduire</button></span>
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                tableString += `
+                        </tbody>
+                    </table>
+                    <div>
+                        Total: <span id="total">${total.toFixed(2)} FCFA</span>
+                    </div>
+                `;
+
+                $('#item-list').html(tableString);
+                updatePanierCount();
+                document.getElementById('total1').value = total.toFixed(2) + " FCFA";
+
+                $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché ici
+            }
+
+            renderTable(); 
+
+            $(document).on('click', '.reduce-quantity', function() {
+                let item_id = $(this).data('id');
+                if (panier[item_id]) {
+                    panier[item_id][0]--; 
+                    if (panier[item_id][0] <= 0) {
+                        delete panier[item_id]; 
+                    }
+                    localStorage.setItem('panier', JSON.stringify(panier)); 
+                    renderTable(); 
+                }
+            });
+
+            $(document).on('click', '.add-quantity', function(){
+                let item_id = $(this).data('id');
+                if (panier[item_id]) {
+                    panier[item_id][0]++;
+                }
+                localStorage.setItem('panier', JSON.stringify(panier));
+                renderTable();
+            });
+
+            // Ajouter un gestionnaire d'événements pour le formulaire
+            $('form').on('submit', function() {
+                $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché avant la soumission
+            });
+        });
+    </script>
 
 {% endblock %}
