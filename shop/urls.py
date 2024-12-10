@@ -8,6 +8,9 @@ urlpatterns = [
     path('checkout', views.checkout, name='panier'),
     path('confirmation', views.confirmation, name='confirmation'),
     path('categorie/<str:foo>', views.categorie, name='categorie'),
+    path('A propos', views.about, name='about'),
+    path('contacter', views.contact, name='contact'),
+    path('contact/', views.contact_view, name='contacter'),
 
 ] 
 

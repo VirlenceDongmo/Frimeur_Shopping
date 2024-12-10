@@ -2,31 +2,20 @@
 
 {% block content %}
     <br><br>
-    <div class="row">
-        <div class="row">
-            <div class="col-md-6">
-                <div>
-                    <img src="{{product.image}}" alt="image de l'article" class="img-fluid rounded-custom">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-warning display-3 product-title">
-                    {{product.title}}
-                </div> 
-                <br> 
-                <div class="badge badge-warning rounded-pill bg-dark text-warning price-badge">
-                    Prix : <span id="price{{product.id}}">{{product.price}}</span> FCFA
-                </div>
-                <div class="product-description">
-                    {{product.description}}
-                </div>
-                <br>
-                <button id="{{product.id}}" class="btn btn-success btn-add ted" data-image="{{ product.image }}">Ajouter</button>
-            </div>
-        </div>
 
+    <div class="container about-section">
+        <h1 class="about-title">À Propos de Frimeur-Shopping</h1>
+        <p class="about-content">
+            Bienvenue sur Frimeur-Shopping, un site e-commerce que j'ai développé dans le but d'aider mon frère à gérer son entreprise tout en développant mes compétences en programmation. En tant qu'étudiant en informatique à l'Université de Dschang, j'ai eu l'opportunité de mettre en pratique mes connaissances et de créer une plateforme qui facilite l'achat de produits en ligne.
+        </p>
+        <p class="about-content">
+            Mon objectif est de fournir une expérience utilisateur fluide et agréable, tout en offrant une sélection de produits de qualité. J'espère que ce site sera utile non seulement à mon frère, mais aussi à tous ceux qui recherchent des produits tendance à des prix abordables.
+        </p>
+        <p class="about-content">
+            Merci de votre visite et n'hésitez pas à explorer notre site pour découvrir nos produits !
+        </p>
     </div>
-    <br><br>
+
 {% endblock %}
 
 {% block js %}

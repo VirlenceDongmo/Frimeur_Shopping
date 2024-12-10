@@ -2,31 +2,46 @@
 
 {% block content %}
     <br><br>
-    <div class="row">
-        <div class="row">
-            <div class="col-md-6">
-                <div>
-                    <img src="{{product.image}}" alt="image de l'article" class="img-fluid rounded-custom">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-warning display-3 product-title">
-                    {{product.title}}
-                </div> 
-                <br> 
-                <div class="badge badge-warning rounded-pill bg-dark text-warning price-badge">
-                    Prix : <span id="price{{product.id}}">{{product.price}}</span> FCFA
-                </div>
-                <div class="product-description">
-                    {{product.description}}
-                </div>
-                <br>
-                <button id="{{product.id}}" class="btn btn-success btn-add ted" data-image="{{ product.image }}">Ajouter</button>
-            </div>
-        </div>
 
+    <div class="container contact-section">
+        <h1 class="contact-title">Contactez-nous</h1>
+        <p class="contact-info">
+            Si vous avez des questions, des commentaires ou des suggestions, n'hésitez pas à nous contacter. Nous sommes là pour vous aider !
+        </p>
+
+        {% if messages %}
+            <div class="text-center">
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    
+        <form method="POST">
+            {% csrf_token %}
+            <!--<div class="form-group">
+                <label for="name" class="classeLabel">Nom</label>
+                <input type="text" class="form-control" id="name" value="{{request.user.nom}} {{request.user.prenom}}" required name="nom">
+            </div>
+            <div class="form-group">
+                <br>
+                <label for="email" class="classeLabel">Email</label>
+                <input type="email" class="form-control" id="email" value="{{request.user.email}}" required name="email">
+            </div>-->
+            <div class="form-group">
+                <br>
+                <label for="message" class="classeLabel">Message</label>
+                <textarea class="form-control" id="message" rows="4" placeholder="Votre message" required name="message"></textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <br>
+        </form>
+        <br>
     </div>
-    <br><br>
+
 {% endblock %}
 
 {% block js %}

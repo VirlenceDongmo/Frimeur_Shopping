@@ -58,3 +58,21 @@ class Commande(models.Model) :
     
     def __str__(self):
         return self.nom
+
+
+class Message(models.Model) :
+
+    nom = models.CharField(max_length=300)
+    email = models.EmailField()
+    message = models.CharField(max_length=1000)
+    date_added = models.DateTimeField(auto_now=True)
+
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="message")
+
+    class Meta :
+
+        ordering = ['-date_added']
+
+    
+    def __str__(self):
+        return self.nom

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <br> <br>
-            <h3 class="text-center" style="color: white;">Voici votre liste d'articles sélectionnés</h3>
+            <h3 class="text-center" style="color: black;">Voici votre liste d'articles sélectionnés</h3>
             <br> <br>
             <ol class="list-group list-group-numbered" id="item-list">
                 
@@ -15,65 +15,73 @@
 
     <div>
         <br> <br>
-        <h5 class="text-center" style="color: white;">Pour commander, veuillez remplir et soumettre le formulaire ci-dessous.</h5>
+        <h5 class="text-center" style="color: black;">Pour commander, veuillez remplir et soumettre le formulaire ci-dessous.</h5>
         <br> <br>
     </div>
+
+    {% if messages %}
+        <div class="text-center">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-12">
             <form method="POST">
                 {% csrf_token %}
                 <input type="hidden" id="items" name="items">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="nom" style="color: white;" class="classeLabel">Noms et prénoms</label>
-                        <input type="text" class="form-control classInput" id="nom" name="nom" value="{{request.user.nom}} {{request.user.prenom}}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="email" style="color: white;" class="classeLabel">Email</label>
-                        <input name="email" id="email" type="email" class="form-control classInput" value="{{request.user.email}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="adresse" style="color: white;" class="classeLabel">Adresse de livraison</label>
-                    <input type="text" class="form-control classInput" id="adresseDeLivraison" name="adresseDeLivraison">
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="ville" style="color: white;" class="classeLabel">Ville</label>
-                        <input type="text" class="form-control classInput" id="ville" name="ville">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="pays" style="color: white;" class="classeLabel">Pays</label>
-                        <select id="pays" name="pays" class="form-control classInput">
-                            <option selected >Cameroun</option>
-                            <!--<option>Tchad</option>
-                            <option>Benin</option>
-                            <option>Burkina Faso</option>-->
-                        </select>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="ville" style="color: white;" class="classeLabel">Numéro de téléphone</label>
-                        <input type="text" class="form-control classInput" id="tel" name="tel" value="{{request.user.telephone}}">
-                    </div>
-                    <label for="paiement" style="color: white;" class="classeLabel">Mode de paiement</label>
-                    <div class="form-control classInput">
-                        <div>
-                            <input type="radio" id="mtn" name="paiement" value="MTN Mobile Money">
-                            <label for="mtn" style="color: black;">MTN Mobile Money</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="orange" name="paiement" value="Orange Money">
-                            <label for="orange" style="color: black;">Orange Money</label>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="total" style="color: white;" class="classeLabel">Somme totale</label>
-                        <input name="total" type="text" class="form-control bg-dark text-warning" id="total1" readonly>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Commander</button>
+
+               <!-- <label for="nom" class="classeLabel">Noms et prénoms</label>
+                <input type="text" class="form-control classInput" id="nom" name="nom" value="{{request.user.nom}} {{request.user.prenom}}" required>
+
                 <br>
+                <label for="email" class="classeLabel">Email</label>
+                <input name="email" id="email" type="email" class="form-control classInput" value="{{request.user.email}}" required>-->
+
+                <br>
+                <label for="adresse" class="classeLabel">Adresse de livraison</label>
+                <input type="text" class="form-control classInput" id="adresseDeLivraison" name="adresseDeLivraison" required>
+                
+                <br>
+                <label for="ville" class="classeLabel">Ville</label>
+                <input type="text" class="form-control classInput" id="ville" name="ville" required>
+                
+                <br>
+                <label for="pays" class="classeLabel">Pays</label>
+                <select id="pays" name="pays" class="form-control classInput">
+                    <option selected>Cameroun</option>
+                    <!--<option>Tchad</option>
+                    <option>Benin</option>
+                    <option>Burkina Faso</option>-->
+                </select>
+                <br>
+                
+               <!-- <label for="tel" class="classeLabel">Numéro de téléphone</label>
+                <input type="text" class="form-control classInput" id="tel" name="tel" value="{{request.user.telephone}}" required>
+                <br>-->
+                
+                <label for="paiement" class="classeLabel">Mode de paiement</label>
+                <div>
+                    <br>
+                    <input type="radio" id="mtn" name="paiement" value="MTN Mobile Money">
+                    <label for="mtn" style="color: white;">MTN Mobile Money</label>
+                </div>
+                <div>
+                    <br>
+                    <input type="radio" id="orange" name="paiement" value="Orange Money">
+                    <label for="orange" style="color: white;">Orange Money</label>
+                </div>
+
+                <br>
+                <label for="total" class="classeLabel">Somme totale</label>
+                <input name="total" type="text" class="form-control bg-dark text-warning" id="total1" readonly>
+
+                <br>
+                <button type="submit" class="btn btn-primary">Commander</button>
             </form>
         </div>
     </div>

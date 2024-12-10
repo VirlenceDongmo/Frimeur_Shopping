@@ -12,11 +12,23 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
-        html,body {
+
+        .dropdown-menu {
+            background-color: #ffffff; /* Couleur de fond pour le menu déroulant */
+            border-radius: 8px; /* Coins arrondis */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre pour le menu */
+        }
+
+
+        .btn-secondary {
+            background-color: rgb(241, 241, 172); /* Couleur du bouton du panier */
             color: black;
-            font-family: 'Arial', sans-serif;
-            background-color: blue;
-            margin: 0; 
+            border: none; /* Pas de bordure */
+            transition: background-color 0.3s; /* Animation douce pour le survol */
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Couleur au survol */
         }
 
         .custom-container {
@@ -28,21 +40,10 @@
             margin: 0 auto; /* Centrer le conteneur */
         }
         
-        /* Styles de la navbar */
-        .navbar {
-            background-color: blue; /* Couleur de fond de la navbar */
-        }
-
-        nav {
-            background-color: blue; /* Couleur de fond sombre */
-        }
-
-        .blanc {
-            color: white;
-        }
 
         footer {
             width: 100%;
+            height: auto;
         }
 
         table {
@@ -75,117 +76,54 @@
             padding: 12px;
         }
 
-        form {
-            background-color: #34495e; /* Couleur de fond du formulaire */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            margin-top: 20px;
+        /* -------------------------------style ok--------------------------------*/
+
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Couleur de fond douce */
+            color: black; /* Couleur du texte */
+
         }
 
-        .classeLabel {
-            color: #ecf0f1; /* Couleur des labels */
-            margin-top: 15px;
-        }
-
-        .classInput {
-            width: 1200px;
-        }
-
-        .form-control {
-            border-radius: 4px;
-            border: 1px solid #2980b9; /* Bordure des champs */
-            transition: border-color 0.3s;
-        }
-
-        .btn-primary {
-            background-color: #3498db; /* Couleur de fond du bouton */
-            border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: green ; /* Couleur de fond au survol */
-        }
-
-        .form-row {
-            margin-bottom: 15px; /* Espacement entre les lignes du formulaire */
-        }
-
-        .bg-dark {
-            background-color: #34495e !important; /* Couleur de fond pour le champ de total */
-        }
-
-        .text-warning {
-            color: #f1c40f !important; /* Couleur du texte pour le champ de total */
-        }
-
-        .messages {
-            list-style-type: none; /* Retrait des puces */
-            padding: 0; /* Retrait du padding */
-            margin: 20px 0; /* Espacement autour de la liste */
-        }
-
-        .messages li {
-            margin: 10px 0; /* Espacement entre les messages */
-            padding: 15px; /* Espacement intérieur pour le message */
-            border-radius: 5px; /* Coins arrondis */
-            display: inline-block; /* Pour que le fond s'ajuste à la taille du texte */
-            width: auto; /* Laisse la largeur s'ajuster au contenu */
-        }
-
-        .messages .error {
-            background-color: #f8d7da; /* Couleur de fond pour les erreurs */
-            color: #721c24; /* Couleur du texte pour les erreurs */
-        }
-
-        .messages .success {
-            background-color: #d4edda; /* Couleur de fond pour le succès */
-            color: #155724; /* Couleur du texte pour le succès */
-        }
-
-        <!-- separation-->
+        /*---------------------------Pour la navbar----------------------*/
 
         .navbar {
-            padding: 1rem 2rem; /* Espacement interne */
+            background-color: #34495e; /* Couleur de fond de la navbar */
+            padding: 1rem 1.5rem; /* Espacement interne */
+            color: black;
         }
 
-        .blanc {
-            font-size: 1rem; /* Taille de la police pour le nom de la marque */
-            font-weight: bold; /* Texte en gras */
-            color: white; /* Couleur du texte */
-            transition: color 0.3s; /* Animation douce pour le survol */
+        .navbar-brand {
+            color: #f1c40f; /* Couleur du texte de la marque */
+            font-weight: bold;
+            font-size: 1.8rem; /* Taille de la police de la marque */
         }
 
-        .navbar-brand:hover {
-            color: #0056b3; /* Couleur au survol */
+        .navbar-nav .nav-link {
+            color: #ffffff; /* Couleur des liens */
+            margin-left: 15px; /* Espacement entre les liens */
+            font-size: 1.2rem; /* Taille de la police des liens */
+            transition: color 0.3s; /* Transition douce au survol */
         }
 
-        .nav-link {
-            color: #555; /* Couleur des liens */
-            transition: color 0.3s; /* Animation douce pour le survol */
-        }
-
-        .nav-link:hover {
-            color: #007bff; /* Couleur au survol */
-            text-decoration: underline; /* Soulignement */
+        .navbar-nav .nav-link:hover {
+            color: #f1c40f; /* Couleur au survol */
         }
 
         .dropdown-menu {
-            background-color: #ffffff; /* Couleur de fond pour le menu déroulant */
-            border-radius: 8px; /* Coins arrondis */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre pour le menu */
+            background-color: #34495e; /* Couleur de fond du menu déroulant */
         }
 
         .dropdown-item {
-            color: #333; /* Couleur des éléments du menu déroulant */
+            color: #ffffff; /* Couleur du texte des éléments du menu */
         }
 
         .dropdown-item:hover {
-            background-color: #007bff; /* Couleur de fond au survol */
-            color: white; /* Couleur du texte au survol */
+            background-color: #f1c40f; /* Couleur au survol des éléments du menu */
+            color: black; /* Couleur du texte au survol */
         }
 
         .btn-secondary {
@@ -199,18 +137,149 @@
             background-color: #5a6268; /* Couleur au survol */
         }
 
-        .nav-item {
-            margin-left: 15px; /* Espacement entre les éléments de la nav */
+        /*---------------------Pour les formulaires---------------------------------*/
+
+        .classeLabel {
+            color: #ffffff; /* Couleur des labels */
         }
 
-        @media (max-width: 992px) {
+        .classInput {
+            width: 100%; /* Les champs prennent 100% de la largeur */
+            border-radius: 4px; /* Coins arrondis */
+            box-sizing: border-box;
+        }
+
+        form {
+            background-color: #34495e; /* Couleur de fond du formulaire */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #2980b9; /* Bordure des champs */
+            transition: border-color 0.3s;
+            font-size: 1rem; /* Taille de police de base */
+            padding: 0.5rem; /* Espacement interne */
+            transition: font-size 0.3s ease; /* Transition douce pour la taille de police */
+        }
+
+        /* Styles responsives */
+        @media (max-width: 768px) {
+
             .navbar {
-                padding: 0.5rem 1rem; /* Réduction de l'espacement sur les petits écrans */
+                padding: 0.5rem 1rem; /* Réduction de l'espacement sur petits écrans */
             }
 
-            .nav-item {
-                margin-left: 10px; /* Ajustement de l'espacement sur les petits écrans */
+            .navbar-brand {
+                font-size: 1.5rem; /* Taille de la police de la marque pour petits écrans */
             }
+
+            .navbar-nav .nav-link {
+                font-size: 1rem; /* Taille de la police des liens pour petits écrans */
+            }
+        }
+
+        /*--------------------------Pour les articles--------------------*/
+        .product {
+            width: 100%; /* L'image prend 100% de la largeur de son conteneur */
+            height: auto; /* Hauteur automatique pour conserver le ratio */
+        }
+
+        .card {
+            margin: 15px; /* Espacement entre les cartes */
+        }
+
+        .card-title {
+            font-size: 1.5vw; /* Taille de police adaptative */
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1.2vw; /* Taille de police adaptative */
+        }
+
+        .card-img-top {
+            max-width: 100%;
+        }
+
+        .btn {
+            width: 100%; /* Les boutons prennent 100% de la largeur */
+            padding: 0.5vw; /* Padding adaptatif */
+            font-size: 1.5vw; /* Taille de police adaptative */
+        }
+
+        .btn-warning {
+            background-color: #ffc107; /* Couleur personnalisée pour le bouton Description */
+        }
+
+        .btn-success {
+            background-color: #28a745; /* Couleur personnalisée pour le bouton Ajouter */
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .card-title {
+                font-size: 4vw; /* Taille de police plus grande pour petits écrans */
+            }
+
+            .card-text {
+                font-size: 3vw; /* Taille de police plus grande pour petits écrans */
+            }
+
+            .btn {
+                padding: 2vw; /* Padding plus grand pour petits écrans */
+                font-size: 3vw; /* Taille de police plus grande pour petits écrans */
+            }
+        }
+
+        .about-section {
+            padding: 60px 0;
+        }
+        .about-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-align: center;
+        }
+        .about-content {
+            font-size: 1.2rem;
+        }
+
+        /*----------------------------style des messages du backend-------------------------*/
+
+        .messages {
+            display: inline-block; /* Permet au fond de s'ajuster à la taille du message */
+            list-style-type: none; /* Supprime les puces de la liste */
+            padding: 0; /* Supprime le padding par défaut */
+            margin: 0; /* Supprime la marge par défaut */
+        }
+
+        .messages li {
+            padding: 15px; /* Espacement interne */
+            margin-bottom: 10px; /* Espacement entre les messages */
+            border-radius: 5px; /* Coins arrondis */
+            font-size: 1.1rem; /* Taille de police */
+        }
+
+        .messages li.success {
+            background-color: #d4edda; /* Vert clair */
+            color: #155724; /* Texte vert foncé */
+            border: 1px solid #c3e6cb; /* Bordure verte */
+        }
+
+        .messages li.error {
+            background-color: #f8d7da; /* Rouge clair */
+            color: #721c24; /* Texte rouge foncé */
+            border: 1px solid #f5c6cb; /* Bordure rouge */
+        }
+
+        .messages li.warning {
+            background-color: #fff3cd; /* Jaune clair */
+            color: #856404; /* Texte jaune foncé */
+            border: 1px solid #ffeeba; /* Bordure jaune */
         }
 
     </style>
@@ -219,58 +288,50 @@
     <div class="custom-container">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-light blanc">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
                     <a class="navbar-brand" href="{% url 'home' %}">Frimeur-Shopping</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                          {% if user.is_authenticated %}
-                              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Catégories
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                  <a class="dropdown-item" href="{% url 'home' %}">Tous les articles</a>
-                                  <a class="dropdown-item" href="{% url 'categorie' 'Sac' %}">Sacs</a>
-                                  <a class="dropdown-item" href="{% url 'categorie' 'Montre' %}">Montres</a>
-                                </div>
-                              </li>
-                              <li class="nav-item">
-                                <a id="panier" href="{% url 'panier' %}" class="btn btn-secondary" data-container="body">
-                                Panier = 0
-                                </a>
-                              </li>
-                              <li class="nav-item"><a class="nav-link" href="{% url 'logout_view' %}">Déconnexion</a></li>
-                              <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                              <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                              <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
-                          {% else %}
-                              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Catégories
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                  <a class="dropdown-item" href="{% url 'home' %}">Tous les articles</a>
-                                  <a class="dropdown-item" href="{% url 'categorie' 'Sac' %}">Sacs</a>
-                                  <a class="dropdown-item" href="{% url 'categorie' 'Montre' %}">Montres</a>
-                                </div>
-                              </li>
-                              <li class="nav-item">
-                                <a id="panier" href="{% url 'panier' %}" class="btn btn-secondary" data-container="body">
-                                Panier = 0
-                                </a>
-                              </li> 
-                              <li class="nav-item"><a class="nav-link" href="{% url 'register_view' %}">Inscription</a></li>
-                              <li class="nav-item"><a class="nav-link" href="{% url 'login_view' %}">Connexion</a></li> 
-                              <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                              <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
-                          {% endif %}
-                      </ul>
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{% url 'home' %}">Tous les articles</a>
+                                        <a class="dropdown-item" href="{% url 'categorie' 'Sac' %}">Sacs</a>
+                                        <a class="dropdown-item" href="{% url 'categorie' 'Montre' %}">Montres</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="panier" href="{% url 'panier' %}" class="btn btn-secondary">Panier = 0</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'logout_view' %}">Déconnexion</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">A propos</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                                <!--<li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>-->
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{% url 'home' %}">Tous les articles</a>
+                                        <a class="dropdown-item" href="{% url 'categorie' 'Sac' %}">Sacs</a>
+                                        <a class="dropdown-item" href="{% url 'categorie' 'Montre' %}">Montres</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="panier" href="{% url 'panier' %}" class="btn btn-secondary">Panier = 0</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'register_view' %}">Inscription</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'login_view' %}">Connexion</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">A propos</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                                <!--<li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>-->
+                            {% endif %}
+                        </ul>
                     </div>
                 </nav>
             </div>
@@ -278,7 +339,7 @@
         {% block content %}{% endblock %}
     </div>
     <footer class="py-5 bg-dark">
-      <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+      <div class="container"><p class="m-0 text-center text-white">&copy; 2024 Frimeur-Shopping. Tous droits réservés.</p></div>
     </footer>
     {% block js %}{% endblock %}
 </body>

@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Product, Commande, Category
+from .models import Product, Commande, Category, Message
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 import json
+from django.conf import settings
 
 # Create your views here.
 
@@ -36,16 +37,20 @@ def detail(request, myid) :
 def checkout(request) :
 
     if(request.method == "POST") :
-        nom = request.POST.get('nom')
+        user = request.user
+        nom = user.nom
         total = request.POST.get('total')
-        email = request.POST.get('email')
+        email = user.email
         adresseDeLivraison = request.POST.get('adresseDeLivraison')
         ville = request.POST.get('ville')
         pays = request.POST.get('pays')
         items = request.POST.get('items')
-        tel = request.POST.get('tel')
-        user = request.user
+        tel = user.telephone
         paiement = request.POST.get('paiement')
+
+        if paiement != 'MTN Mobile Money' and paiement != 'Orange Money' :
+            messages.error(request, "Veuillez choisir un mode de paiement")
+            return redirect('panier')
 
         com = Commande(items = items, total = total, nom = nom, email = email, adresseDeLivraison = adresseDeLivraison, ville = ville, pays = pays, tel = tel, paiement = paiement, user_id = user)
         com.save()
@@ -104,11 +109,9 @@ def checkout(request) :
         {articles_str}
 
         """
-
-        from_email = 'dongmovirlence@gmail.com'
         recipient_list = ['dongmofeudjio5@gmail.com']
 
-        send_mail(subjectForUs, messageForUs, from_email, recipient_list)
+        send_mail(subjectForUs, messageForUs, settings.EMAIL_HOST_USER, recipient_list)
 
         subjectForHer = 'Demande de confirmation depuis Frimeur-Shopping'
 
@@ -126,10 +129,9 @@ def checkout(request) :
             messageForHer += f"""
             Pour confirmer votre commande, veuillez verser la somme de : {total} au numero de compte suivant : 6 56 93 19 87 avec pour nom Feudjio Divin."""
 
-        from_email = 'dongmovirlence@gmail.com'
         recipient_list = {email}
 
-        send_mail(subjectForHer,messageForHer,from_email,recipient_list)
+        send_mail(subjectForHer,messageForHer,settings.EMAIL_HOST_USER,recipient_list)
 
         return redirect('confirmation')
 
@@ -164,3 +166,35 @@ def categorie(request, foo) :
         
         return redirect ('home')
     
+
+
+def about(request):
+    return render(request, 'shop/about.html')
+    
+
+@login_required(login_url='login_view')
+def contact(request):
+    return render(request, 'shop/contact.html')
+
+
+def contact_view(request):
+    if request.method == 'POST':
+        user = request.user
+        nom = user.nom
+        email = user.email
+        message = request.POST.get('message')
+
+        messageSave = Message(user_id = user, nom = nom, email = email, message = message)
+        messageSave.save()
+
+        subject = f'Nouveau message de {nom} depuis Frimeur-Shopping'
+        body = f'Message de {nom} ({email}):\n\n{message}'
+        recipient_list = ['dongmofeudjio5@gmail.com']  
+
+        messages.success(request, "Votre message a bien été reçu. Nous vous remercions pour votre participation.")
+
+        send_mail(subject, body, settings.EMAIL_HOST_USER, recipient_list)
+
+        return redirect('contact')  
+
+    return render(request, 'contact.html')
