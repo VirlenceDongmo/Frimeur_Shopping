@@ -81,7 +81,7 @@
                 <input name="total" type="text" class="form-control bg-dark text-warning" id="total1" readonly>
 
                 <br>
-                <button type="submit" class="btn btn-primary">Commander</button>
+                <button type="submit" class="btn btn-primary commande">Commander</button>
             </form>
         </div>
     </div>
@@ -183,6 +183,13 @@
                 localStorage.setItem('panier', JSON.stringify(panier));
                 renderTable();
             });
+
+            $(document).on('click', '.commande', function(){
+                localStorage.clear()
+                renderTable();
+            });
+
+            updatePanierCount();
 
             // Ajouter un gestionnaire d'événements pour le formulaire
             $('form').on('submit', function() {
