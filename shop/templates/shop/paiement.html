@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Paiement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        .payment-method {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Paiement</h2>
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="payment-method">Méthode de paiement</label>
+                <select id="payment-method" required>
+                    <option value="mtn">MTN Mobile Money</option>
+                    <option value="orange">Orange Money</option>
+                </select>
+            </div>
+            <div id="mobile-details" style="display: none;">
+                <div class="form-group">
+                    <label for="phone-number">Numéro de téléphone</label>
+                    <input type="text" id="phone-number" placeholder="Ex: 0701234567" required>
+                </div>
+            </div>
+
+            <input type="submit" value="Payer">
+        </form>
+    </div>
+    <script>
+        document.getElementById('payment-method').addEventListener('change', function() {
+            const method = this.value;
+            document.getElementById('card-details').style.display = method === 'card' ? 'block' : 'none';
+            document.getElementById('mobile-details').style.display = (method === 'mtn' || method === 'orange') ? 'block' : 'none';
+        });
+
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const method = document.getElementById('payment-method').value;
+
+            let paymentData = {};
+            if (method === 'card') {
+                paymentData = {
+                    cardNumber: document.getElementById('card-number').value,
+                    expiryDate: document.getElementById('expiry-date').value,
+                    cvc: document.getElementById('cvc').value
+                };
+            } else {
+                paymentData = {
+                    phoneNumber: document.getElementById('phone-number').value,
+                    method: method
+                };
+            }
+
+            // Appel à l'API de paiement
+            fetch('https://api.votreservice.com/paiement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(paymentData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Paiement réussi !');
+                } else {
+                    alert('Erreur de paiement : ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur :', error);
+                alert('Erreur lors du traitement du paiement.');
+            });
+        });
+    </script>
+</body>
+</html>

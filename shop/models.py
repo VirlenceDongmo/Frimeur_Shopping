@@ -38,6 +38,11 @@ class Product(models.Model) :
 
 class Commande(models.Model) :
 
+    STATUS_CHOICES = (
+        ('en cours', 'En cours'),
+        ('complétée', 'Complétée')
+    )
+
     items = models.CharField(max_length=300)
     total = models.CharField(max_length=300)
     nom = models.CharField(max_length=300)
@@ -48,6 +53,7 @@ class Commande(models.Model) :
     date_commande = models.DateTimeField(auto_now=True)
     tel = models.BigIntegerField()
     paiement = models.CharField(max_length=300)
+    status = models.CharField(default='en cours', max_length=30)
 
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="commande")
 

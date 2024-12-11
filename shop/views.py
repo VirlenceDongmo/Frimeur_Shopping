@@ -198,3 +198,7 @@ def contact_view(request):
         return redirect('contact')  
 
     return render(request, 'contact.html')
+
+
+def paiement_view(request) :
+    return render (request, 'shop/paiement.html')

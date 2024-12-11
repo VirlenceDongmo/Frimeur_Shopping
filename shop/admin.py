@@ -17,7 +17,7 @@ class ProductManager(admin.ModelAdmin) :
     list_editable = ('price',)
 
 class CommandeManager(admin.ModelAdmin) :
-    list_display = ('items','nom','email','date_commande', 'total')
+    list_display = ('status','items','nom','email','date_commande', 'total')
 
 class MessageManager(admin.ModelAdmin) :
     list_display = ('nom','email','date_added',)
