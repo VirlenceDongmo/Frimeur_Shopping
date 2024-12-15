@@ -14,6 +14,21 @@ class Category(models.Model) :
 
     def __str__(self) -> str:
         return self.name
+    
+
+
+class Size(models.Model):
+    name = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name
+    
+
+class Color(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 
@@ -26,6 +41,10 @@ class Product(models.Model) :
     date_added = models.DateTimeField(auto_now=True)
 
     category = models.ForeignKey(Category, related_name='category', on_delete=models.CASCADE)
+
+    sizes = models.ManyToManyField(Size)
+
+    colors = models.ManyToManyField(Color)
 
     class Meta :
 
@@ -52,7 +71,6 @@ class Commande(models.Model) :
     pays = models.CharField(max_length=300)
     date_commande = models.DateTimeField(auto_now=True)
     tel = models.BigIntegerField()
-    paiement = models.CharField(max_length=300)
     status = models.CharField(default='en cours', max_length=30)
 
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="commande")

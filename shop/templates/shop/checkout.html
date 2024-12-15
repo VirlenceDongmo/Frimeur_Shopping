@@ -81,7 +81,7 @@
                 <input name="total" type="text" class="form-control bg-dark text-warning" id="total1" readonly>
 
                 <br>
-                <button type="submit" class="btn btn-primary commande">Commander</button>
+                <button type="submit" class="btn btn-primary">Commander</button>
             </form>
         </div>
     </div>
@@ -134,6 +134,8 @@
                         <tr>
                             <td>
                                 <div>${nom}</div>
+                                <div>Couleur : ${panier[item][4]}</div>
+                                <div>Taille : ${panier[item][5]}</div>
                                 <div><img src="${panier[item][3]}" style="width: 100px; height: auto;"></div>
                             </td>
                             <td>${quantite}</td>
@@ -181,11 +183,6 @@
                     panier[item_id][0]++;
                 }
                 localStorage.setItem('panier', JSON.stringify(panier));
-                renderTable();
-            });
-
-            $(document).on('click', '.commande', function(){
-                localStorage.clear()
                 renderTable();
             });
 

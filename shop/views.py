@@ -6,12 +6,16 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 import json
 from django.conf import settings
+from shop.API.PaiementMTN.apiDePaiement import PayClass
+import uuid
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 # Create your views here.
 
 def index(request) :
 
-    product_object = Product.objects.all()
+    product_object = Product.objects.all().prefetch_related('sizes','colors')
 
     item_name = request.GET.get("item-name")
 
@@ -46,13 +50,8 @@ def checkout(request) :
         pays = request.POST.get('pays')
         items = request.POST.get('items')
         tel = user.telephone
-        paiement = request.POST.get('paiement')
 
-        if paiement != 'MTN Mobile Money' and paiement != 'Orange Money' :
-            messages.error(request, "Veuillez choisir un mode de paiement")
-            return redirect('panier')
-
-        com = Commande(items = items, total = total, nom = nom, email = email, adresseDeLivraison = adresseDeLivraison, ville = ville, pays = pays, tel = tel, paiement = paiement, user_id = user)
+        com = Commande(items = items, total = total, nom = nom, email = email, adresseDeLivraison = adresseDeLivraison, ville = ville, pays = pays, tel = tel, user_id = user)
         com.save()
 
         # Convertir les items du panier (JSON) en dictionnaire
@@ -78,62 +77,51 @@ def checkout(request) :
 
         # Envoyer un email
 
-        subjectForUs = 'Nouvelle commande'
-        messageForUs = f"""
-        Une nouvelle commande a été passée par {nom} depuis Frimeur-Shopping.
+       # subjectForUs = 'Nouvelle commande'
+       # messageForUs = f"""
+       # Une nouvelle commande a été passée par {nom} depuis Frimeur-Shopping.
 
-        Détails de la commande :
+        #Détails de la commande :
 
-        - Email du commanditaire : 
-            {email}
+        #- Email du commanditaire : 
+        #    {email}
 
-        - Adresse de livraison : 
-            {adresseDeLivraison}
+        #- Adresse de livraison : 
+        #    {adresseDeLivraison}
 
-        - Ville de résidence du commanditaire : 
-            {ville}
+        #- Ville de résidence du commanditaire : 
+        #    {ville}
 
-        - Pays de résidence du commanditaire : 
-            {pays}
+        #- Pays de résidence du commanditaire : 
+        #    {pays}
 
-        - Numéro de téléphone du commanditaire : 
-            {tel}
+        #- Numéro de téléphone du commanditaire : 
+        #    {tel}
 
-        - Somme totale des commandes : 
-            {total}
+        #- Somme totale des commandes : 
+        #    {total}
 
-        - Mode de paiement : 
-            {paiement}
+        #- Articles : 
+        #{articles_str}
 
-        - Articles : 
-        {articles_str}
+        #"""
+        #recipient_list = ['dongmofeudjio5@gmail.com']
 
-        """
-        recipient_list = ['dongmofeudjio5@gmail.com']
+        #send_mail(subjectForUs, messageForUs, settings.EMAIL_HOST_USER, recipient_list)
 
-        send_mail(subjectForUs, messageForUs, settings.EMAIL_HOST_USER, recipient_list)
+        #subjectForHer = 'Demande de confirmation depuis Frimeur-Shopping'
 
-        subjectForHer = 'Demande de confirmation depuis Frimeur-Shopping'
-
-        messageForHer = f"""
-        Nous vous sommes reconnaissants pour votre confiance Mr/Mme/Mslle {nom}.
+        #messageForHer = f"""
+        #Nous vous sommes reconnaissants pour votre confiance Mr/Mme/Mslle {nom}.
         
-        Si vous rencontrez des problèmes pour vos opérations sur notre plateforme, à défaut de nous contacter par email, vous pouvez le faire via notre numéro whatsapp suivant : 6 54 15 81 75 .
-        """
+        #Si vous rencontrez des problèmes pour vos opérations sur notre plateforme, à défaut de nous contacter #par email, vous pouvez le faire via notre numéro whatsapp suivant : 6 54 15 81 75 .
+        #"""
 
-        if paiement == 'MTN Mobile Money' :
-            messageForHer += f"""
-            Pour confirmer votre commande, veuillez verser la somme de : {total} au numero de compte suivant : 6 54 15 81 75 avec pour nom Dongmo virlence."""
+        #recipient_list = {email}
 
-        if paiement == 'Orange Money' :
-            messageForHer += f"""
-            Pour confirmer votre commande, veuillez verser la somme de : {total} au numero de compte suivant : 6 56 93 19 87 avec pour nom Feudjio Divin."""
+        #send_mail(subjectForHer,messageForHer,settings.EMAIL_HOST_USER,recipient_list)
 
-        recipient_list = {email}
-
-        send_mail(subjectForHer,messageForHer,settings.EMAIL_HOST_USER,recipient_list)
-
-        return redirect('confirmation')
+        return redirect('paiement')
 
     return render(request,"shop/checkout.html")
 
@@ -200,5 +188,24 @@ def contact_view(request):
     return render(request, 'contact.html')
 
 
+@csrf_exempt  # Désactivez la protection CSRF pour cette vue (à utiliser avec précaution)
 def paiement_view(request) :
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        phone_number = data.get('phoneNumber')
+        method = data.get('method')
+        amount = 100  # Montant à traiter
+        currency = "EUR"  # Devise à utiliser
+        txt_ref = str(uuid.uuid4())  # Référence unique pour la transaction
+        payermessage = "Paiement pour le service"
+
+        if method == 'mtn':
+            response = PayClass.momopay(amount, currency, txt_ref, phone_number, payermessage)
+        elif method == 'orange':
+            # Ajoutez la logique pour Orange Money ici
+            response = {}  # Remplacez cela par l'appel API approprié
+
+        return JsonResponse(response)
+
     return render (request, 'shop/paiement.html')

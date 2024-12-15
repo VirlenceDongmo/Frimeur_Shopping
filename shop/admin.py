@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Commande, Message
+from .models import Category, Product, Commande, Message, Size, Color
 
 # Register your models here.
 
@@ -16,13 +16,26 @@ class ProductManager(admin.ModelAdmin) :
     search_fields= ('title',)
     list_editable = ('price',)
 
+
 class CommandeManager(admin.ModelAdmin) :
     list_display = ('status','items','nom','email','date_commande', 'total')
 
+
 class MessageManager(admin.ModelAdmin) :
     list_display = ('nom','email','date_added',)
+
+
+class ColorManager(admin.ModelAdmin) :
+    list_display = ('name',)
+
+
+class SizeManager(admin.ModelAdmin) :
+    list_display = ('name',)
+
 
 admin.site.register(Category, CategoryManager)
 admin.site.register(Product, ProductManager)
 admin.site.register(Commande, CommandeManager)
 admin.site.register(Message, MessageManager)
+admin.site.register(Color, ColorManager)
+admin.site.register(Size, SizeManager)

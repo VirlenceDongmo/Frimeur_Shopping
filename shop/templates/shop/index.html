@@ -21,12 +21,35 @@
         {% for product in product_object %}
             <div class="col-md-3">
                 <div class="card">
-                    <img src="{{ product.image }}" alt="Image de l'article" class="product card-img-top rounded-custom">
+                    <img src="{{ product.image.url }}" alt="Image de l'article" class="product card-img-top rounded-custom">
                     <div class="card-body">
-                        <div id="aa{{product.id}}" class="card-title">{{product.title}}</div>
-                        <div id="price{{product.id}}" class="card-text">{{product.price}} <span>FCFA</span></div>
-                        <a href="{{product.id}}" class="btn btn-warning">Description</a>
-                        <button id="{{product.id}}" class="btn btn-success ted" data-image="{{ product.image }}">Ajouter</button>
+                        <div id="aa{{ product.id }}" class="card-title">{{ product.title }}</div>
+                        <div id="price{{ product.id }}" class="card-text">{{ product.price }} <span>FCFA</span></div>
+                        
+                        <!-- Sélecteur de taille -->
+                        <div class="form-group">
+                            <label for="size{{ product.id }}">Taille:</label>
+                            <select id="size{{ product.id }}" class="form-control">
+                                <option value="" disabled selected>Choisissez une taille</option>
+                                {% for size in product.sizes.all %}
+                                    <option value="{{ size.name }}">{{ size.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Sélecteur de couleur -->
+                        <div class="form-group">
+                            <label for="color{{ product.id }}">Couleur:</label>
+                            <select id="color{{ product.id }}" class="form-control">
+                                <option value="" disabled selected>Choisissez une couleur</option>
+                                {% for color in product.colors.all %}
+                                    <option value="{{ color.name }}">{{ color.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+            
+                        <a href="{{ product.id }}" class="btn btn-warning">Description</a>
+                        <button id="{{ product.id }}" class="btn btn-success ted" data-image="{{ product.image.url }}">Ajouter</button>
                     </div>
                 </div>
             </div>
@@ -74,6 +97,16 @@
             var item_id = this.id.toString();
             var imageUrl = $(this).data('image');
             
+            // Récupération des sélections de taille et couleur
+            var size = $('#size' + item_id).val();
+            var color = $('#color' + item_id).val();
+            
+            // Vérification des sélections
+            if (!size || !color) {
+                alert('Veuillez sélectionner une taille et une couleur.');
+                return;
+            }
+            
             if (panier[item_id] != undefined) {
                 // Si l'article existe déjà, augmentez simplement la quantité
                 panier[item_id][0]++; // Augmentez la quantité
@@ -81,7 +114,7 @@
                 // Si c'est un nouvel article, ajoutez-le au panier
                 var prix = parseFloat(document.getElementById('price' + item_id).innerHTML);
                 var nom = document.getElementById("aa" + item_id).innerHTML;
-                panier[item_id] = [1, nom, prix, imageUrl]; // Initialise la quantité à 1
+                panier[item_id] = [1, nom, prix, imageUrl, color, size]; // Initialise la quantité à 1
             }
             
             localStorage.setItem('panier', JSON.stringify(panier));
