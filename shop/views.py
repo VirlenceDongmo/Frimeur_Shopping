@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Commande, Category, Message
+from .models import Product, Commande, Category, Message, Payment
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -10,6 +10,8 @@ from shop.API.PaiementMTN.apiDePaiement import PayClass
 import uuid
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from .forms import PaymentForm
+import requests
 
 # Create your views here.
 
@@ -189,23 +191,49 @@ def contact_view(request):
 
 
 @csrf_exempt  # Désactivez la protection CSRF pour cette vue (à utiliser avec précaution)
-def paiement_view(request) :
-
+def payment_view(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        phone_number = data.get('phoneNumber')
-        method = data.get('method')
-        amount = 100  # Montant à traiter
-        currency = "EUR"  # Devise à utiliser
-        txt_ref = str(uuid.uuid4())  # Référence unique pour la transaction
-        payermessage = "Paiement pour le service"
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment_data = form.cleaned_data
+            payment = Payment.objects.create(
+                amount=payment_data['amount'],
+                phone_number=payment_data.get('phone_number'),
+                card_number=payment_data.get('card_number'),
+                expiry_date=payment_data.get('expiry_date'),
+                cvv=payment_data.get('cvv'),
+                status='pending'
+            )
 
-        if method == 'mtn':
-            response = PayClass.momopay(amount, currency, txt_ref, phone_number, payermessage)
-        elif method == 'orange':
-            # Ajoutez la logique pour Orange Money ici
-            response = {}  # Remplacez cela par l'appel API approprié
+            if payment_data['payment_method'] == 'mtn':
+                # Appel à l'API MTN Mobile Money
+                response = requests.post('https://api.mtn.com/checkout', json={
+                    'amount': payment_data['amount'],
+                    'phone': payment_data['phone_number']
+                })
+            elif payment_data['payment_method'] == 'orange':
+                # Appel à l'API Orange Money
+                response = requests.post('https://api.orange.com/checkout', json={
+                    'amount': payment_data['amount'],
+                    'phone': payment_data['phone_number']
+                })
+            elif payment_data['payment_method'] == 'card':
+                # Appel à l'API de paiement par carte
+                response = requests.post('https://api.cardpayment.com/checkout', json={
+                    'amount': payment_data['amount'],
+                    'card_number': payment_data['card_number'],
+                    'expiry_date': payment_data['expiry_date'],
+                    'cvv': payment_data['cvv']
+                })
 
-        return JsonResponse(response)
+            if response.status_code == 200:
+                payment.status = 'completed'
+                payment.save()
+                return redirect('success')  # Redirigez vers une page de succès
+            else:
+                return render(request, 'paiement.html', {'form': form, 'error': response.json().get('message')})
 
-    return render (request, 'shop/paiement.html')
+    else:
+        form = PaymentForm()
+    return render(request, 'shop/paiement.html', {'form': form})
+

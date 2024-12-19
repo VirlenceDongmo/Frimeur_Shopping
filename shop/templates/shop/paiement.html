@@ -1,95 +1,56 @@
-
 {% extends "shop/base.html" %}
 
+{% load static %}
+
 {% block content %}
-    <br><br>
+
+    <br>
 
     <div class="container">
         <h2>Paiement</h2>
-        <form id="payment-form">
-            <!--<div class="form-group">
+        <form id="payment-form" class="payment-form">
+            <div class="form-group">
                 <label for="payment-method">Méthode de paiement</label>
                 <select id="payment-method" required>
+                    <option value="" disabled selected>Sélectionnez une méthode</option>
                     <option value="mtn">MTN Mobile Money</option>
                     <option value="orange">Orange Money</option>
+                    <option value="card">Carte Bancaire</option>
                 </select>
-            </div>-->
-            <label for="paiement" class="classeLabel">Mode de paiement</label>
-            <div>
-                <br>
-                <input type="radio" id="mtn" name="paiement" value="MTN Mobile Money">
-                <label for="mtn" style="color: white;">MTN Mobile Money</label>
             </div>
-            <div>
-                <br>
-                <input type="radio" id="orange" name="paiement" value="Orange Money">
-                <label for="orange" style="color: white;">Orange Money</label>
-                <br>
-            </div>
-            <div id="mobile-details">
+    
+            <div id="mobile-details" class="payment-details">
                 <div class="form-group">
-                    <label for="phone-number"  style="color: white;">Numéro de téléphone</label>
+                    <label for="phone-number">Numéro de téléphone</label>
                     <input type="text" id="phone-number" required>
                 </div>
             </div>
-
+    
+            <div id="card-details" class="payment-details" style="display: none;">
+                <div class="form-group">
+                    <label for="card-number">Numéro de carte</label>
+                    <input type="text" id="card-number" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiry-date">Date d'expiration (MM/AA)</label>
+                    <input type="text" id="expiry-date" placeholder="MM/AA" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" required>
+                </div>
+            </div>
+    
             <input type="submit" class="commande" value="Payer">
         </form>
     </div>
 
+    <link rel="stylesheet" href="{% static 'css/paiementStyle.css' %}">
+
 {% endblock %}
 
 {% block js %}
-
-    <script>
-        
-        document.getElementById('payment-form').addEventListener('submit', function(event) {
-
-            function updatePanierCount() {
-                document.getElementById("panier").innerHTML = "Panier = " + Object.keys(panier).length;
-            }
-
-            updatePanierCount();
-
-            event.preventDefault();
-            const method = document.getElementById('payment-method').value;
-
-            let paymentData = {
-                phoneNumber: document.getElementById('phone-number').value,
-                method: method
-            };
-
-            // Appel à l'API de paiement
-            fetch('/paiement', {  // Utilisez l'URL relative à votre API
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(paymentData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.response === 200) {  // Vérifiez le code de réponse approprié
-                    alert('Paiement réussi !');
-                } else {
-                    alert('Erreur de paiement : ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur :', error);
-                alert('Erreur lors du traitement du paiement.');
-            });
-
-
-
-            $(document).on('click', '.commande', function(){
-                localStorage.clear()
-                renderTable();
-            });
-
-            updatePanierCount();
-        });
-
-    </script>
+ 
+    <script src="{% static 'javascript/paiementJs.js' %}"></script>
 
 {% endblock %}

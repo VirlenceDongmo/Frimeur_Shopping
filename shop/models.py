@@ -1,5 +1,6 @@
 from django.db import models
 from Authentification_du_systeme.models import CustomUser
+from django import forms
 
 # Create your models here.
 
@@ -100,3 +101,15 @@ class Message(models.Model) :
     
     def __str__(self):
         return self.nom
+    
+
+
+class Payment(models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    card_number = models.CharField(max_length=16, blank=True, null=True)
+    expiry_date = models.CharField(max_length=5, blank=True, null=True)
+    cvv = models.CharField(max_length=3, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('completed', 'Completed')])
+

@@ -22,20 +22,26 @@
         <p>Si vous n'avez pas encore de compte, veuillez cliquer sur <a href="{% url 'register_view' %}">S'inscrire</a> pour vous inscrire</p>
     </div>
 
-    <div class="container px-5 my-5">
+    <div class="container">
         <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="POST" action=".">
 
             {% csrf_token %}
 
-            <label for="email" class="classeLabel">Email </label>
-            <input class="form-control" id="email" type="email" name="email"/>
+            <div class="form-group">
+                <label for="email" class="classeLabel">Email </label>
+                <input class="form-control" id="email" type="email" name="email"/>
+            </div>
 
-            <label for="motDePass" class="classeLabel">Mot de pass</label>
-            <input class="form-control" id="motDePass" type="password" name="motDePass"/>
+            <div class="form-group">
+                <label for="motDePass" class="classeLabel">Mot de pass</label>
+                <input class="form-control" id="motDePass" type="password" name="motDePass"/>
+            </div>
+
             <br>
             <div class="d-grid">
                 <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Se connecter</button>
             </div>
+            <br>
         </form>
     </div>
 

@@ -1,0 +1,318 @@
+
+
+.dropdown-menu {
+    background-color: #ffffff; /* Couleur de fond pour le menu déroulant */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre pour le menu */
+}
+
+
+.btn-secondary {
+    background-color: rgb(241, 241, 172); /* Couleur du bouton du panier */
+    color: black;
+    border: none; /* Pas de bordure */
+    transition: background-color 0.3s; /* Animation douce pour le survol */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Couleur au survol */
+}
+
+.custom-container {
+    flex: 1; /* Permet au conteneur principal de prendre tout l'espace disponible */
+}
+
+.custom-container {
+    max-width: 90%; /* Limite la largeur à 90% */
+    margin: 0 auto; /* Centrer le conteneur */
+}
+
+
+footer {
+    width: 100%;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    color: black;
+}
+
+thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tbody {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
+}
+
+th {
+    padding: 12px;
+}
+
+/* -------------------------------style ok--------------------------------*/
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #003366; ; /* Couleur de fond douce */
+    color: white; /* Couleur du texte */
+
+}
+
+/*---------------------------Pour la navbar----------------------*/
+
+.navbar {
+    background-color: black;
+    
+    color: white;
+}
+
+.navbar-nav li {
+    padding: 15px !important;
+    border-radius: 30% !important;
+    background-color: #0056b3 !important;
+}
+
+.navbar-brand {
+    color: #f1c40f; 
+    font-weight: bold;
+    font-size: 1.8rem; 
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff; 
+    margin-left: 15px; 
+    font-size: 1.2rem; 
+    transition: color 0.3s; 
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f1c40f; 
+}
+
+.dropdown-menu {
+    background-color: #34495e; 
+}
+
+.dropdown-item {
+    color: #ffffff; 
+}
+
+.dropdown-item:hover {
+    background-color: #f1c40f; /* Couleur au survol des éléments du menu */
+    color: black; /* Couleur du texte au survol */
+}
+
+.btn-secondary {
+    background-color: rgb(241, 241, 172); /* Couleur du bouton du panier */
+    color: black;
+    border: none; /* Pas de bordure */
+    transition: background-color 0.3s; /* Animation douce pour le survol */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Couleur au survol */
+}
+
+/*---------------------Pour les formulaires---------------------------------*/
+
+/*.classeLabel {
+    color: #ffffff; 
+}
+
+.classInput {
+    width: 100%; 
+    border-radius: 4px; 
+    box-sizing: border-box;
+}
+
+form {
+    background-color: #34495e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #2980b9; 
+    transition: border-color 0.3s;
+    font-size: 1rem; 
+    padding: 0.5rem; 
+    transition: font-size 0.3s ease; 
+} */
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: white;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Styles responsives */
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 0.5rem 1rem; /* Réduction de l'espacement sur petits écrans */
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem; /* Taille de la police de la marque pour petits écrans */
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1rem; /* Taille de la police des liens pour petits écrans */
+    }
+}
+
+/*--------------------------Pour les articles--------------------*/
+.product {
+    width: 100%; /* L'image prend 100% de la largeur de son conteneur */
+    height: auto; /* Hauteur automatique pour conserver le ratio */
+}
+
+.card {
+    margin: 15px; /* Espacement entre les cartes */
+    background-color: inherit;
+}
+
+.card-title {
+    font-size: 1.5vw; /* Taille de police adaptative */
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1.2vw; /* Taille de police adaptative */
+}
+
+.card-img-top {
+    max-width: 100%;
+}
+
+.btn {
+    width: 100%; /* Les boutons prennent 100% de la largeur */
+    padding: 0.5vw; /* Padding adaptatif */
+    font-size: 1.5vw; /* Taille de police adaptative */
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Couleur personnalisée pour le bouton Description */
+}
+
+.btn-success {
+    background-color: #28a745; /* Couleur personnalisée pour le bouton Ajouter */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 4vw; /* Taille de police plus grande pour petits écrans */
+    }
+
+    .card-text {
+        font-size: 3vw; /* Taille de police plus grande pour petits écrans */
+    }
+
+    .btn {
+        padding: 2vw; /* Padding plus grand pour petits écrans */
+        font-size: 3vw; /* Taille de police plus grande pour petits écrans */
+    }
+}
+
+.about-section {
+    padding: 60px 0;
+}
+.about-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-align: center;
+}
+.about-content {
+    font-size: 1.2rem;
+}
+
+/*----------------------------style des messages du backend-------------------------*/
+
+.messages {
+    display: inline-block; /* Permet au fond de s'ajuster à la taille du message */
+    list-style-type: none; /* Supprime les puces de la liste */
+    padding: 0; /* Supprime le padding par défaut */
+    margin: 0; /* Supprime la marge par défaut */
+}
+
+.messages li {
+    padding: 15px; /* Espacement interne */
+    margin-bottom: 10px; /* Espacement entre les messages */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 1.1rem; /* Taille de police */
+}
+
+.messages li.success {
+    background-color: #d4edda; /* Vert clair */
+    color: #155724; /* Texte vert foncé */
+    border: 1px solid #c3e6cb; /* Bordure verte */
+}
+
+.messages li.error {
+    background-color: #f8d7da; /* Rouge clair */
+    color: #721c24; /* Texte rouge foncé */
+    border: 1px solid #f5c6cb; /* Bordure rouge */
+}
+
+.messages li.warning {
+    background-color: #fff3cd; /* Jaune clair */
+    color: #856404; /* Texte jaune foncé */
+    border: 1px solid #ffeeba; /* Bordure jaune */
+}
