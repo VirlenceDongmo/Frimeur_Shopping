@@ -16,24 +16,26 @@ $(document).on('click', '.ted', function() {
     var item_id = this.id.toString();
     var imageUrl = $(this).data('image');
     
-    // Récupération des sélections de taille et couleur
     var size = $('#size' + item_id).val();
     var color = $('#color' + item_id).val();
     
-    // Vérification des sélections
+ 
     if (!size || !color) {
         alert('Veuillez sélectionner une taille et une couleur.');
         return;
     }
     
-    if (panier[item_id] != undefined) {
-        // Si l'article existe déjà, augmentez simplement la quantité
-        panier[item_id][0]++; // Augmentez la quantité
+    
+    var uniqueKey = item_id + '-' + size + '-' + color;
+
+    if (panier[uniqueKey] != undefined) {
+        
+        panier[uniqueKey][0]++; 
     } else {
-        // Si c'est un nouvel article, ajoutez-le au panier
+        
         var prix = parseFloat(document.getElementById('price' + item_id).innerHTML);
         var nom = document.getElementById("aa" + item_id).innerHTML;
-        panier[item_id] = [1, nom, prix, imageUrl, color, size]; // Initialise la quantité à 1
+        panier[uniqueKey] = [1, nom, prix, imageUrl, color, size];
     }
     
     localStorage.setItem('panier', JSON.stringify(panier));

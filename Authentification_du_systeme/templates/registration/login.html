@@ -4,7 +4,7 @@
 
     <br><br>
     <div class="text-center">
-        <h2>Connectez-vous pour effectuer vos achats ou pour nous contacter</h2>
+        <h2 style="color: white;">Connectez-vous pour effectuer vos achats ou pour nous contacter</h2>
     </div>
     
     {% if messages %}
@@ -22,18 +22,18 @@
         <p>Si vous n'avez pas encore de compte, veuillez cliquer sur <a href="{% url 'register_view' %}">S'inscrire</a> pour vous inscrire</p>
     </div>
 
-    <div class="container">
+    <div class="formulaire">
         <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="POST" action=".">
 
             {% csrf_token %}
 
             <div class="form-group">
-                <label for="email" class="classeLabel">Email </label>
+                <label for="email">Email </label>
                 <input class="form-control" id="email" type="email" name="email"/>
             </div>
 
             <div class="form-group">
-                <label for="motDePass" class="classeLabel">Mot de pass</label>
+                <label for="motDePass">Mot de pass</label>
                 <input class="form-control" id="motDePass" type="password" name="motDePass"/>
             </div>
 

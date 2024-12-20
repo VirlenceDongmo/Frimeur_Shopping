@@ -28,33 +28,33 @@ document.addEventListener("DOMContentLoaded", function() {
                 </thead>
                 <tbody>
         `;
-
-        for (let item in panier) {
-            let nom = panier[item][1];
-            let quantite = panier[item][0];
-            let prix = parseFloat(panier[item][2]);
-
+    
+        for (let uniqueKey in panier) {
+            let nom = panier[uniqueKey][1];
+            let quantite = panier[uniqueKey][0];
+            let prix = parseFloat(panier[uniqueKey][2]);
+    
             let prixTotal = quantite * prix; 
             total += prixTotal; 
-
+    
             tableString += `
                 <tr>
                     <td>
                         <div>${nom}</div>
-                        <div>Couleur : ${panier[item][4]}</div>
-                        <div>Taille : ${panier[item][5]}</div>
-                        <div><img src="${panier[item][3]}" style="width: 100px; height: auto;"></div>
+                        <div>Couleur : ${panier[uniqueKey][4]}</div>
+                        <div>Taille : ${panier[uniqueKey][5]}</div>
+                        <div><img src="${panier[uniqueKey][3]}" style="width: 100px; height: auto;"></div>
                     </td>
                     <td>${quantite}</td>
                     <td>${prixTotal.toFixed(2)} FCFA</td>
                     <td>
-                        <span><button class="btn btn-success add-quantity" data-id="${item}">Augmenter</button></span>
-                        <span><button class="btn btn-danger reduce-quantity" data-id="${item}">Réduire</button></span>
+                        <span><button class="btn btn-success add-quantity" data-id="${uniqueKey}">Augmenter</button></span>
+                        <span><button class="btn btn-danger reduce-quantity" data-id="${uniqueKey}">Réduire</button></span>
                     </td>
                 </tr>
             `;
         }
-
+    
         tableString += `
                 </tbody>
             </table>
@@ -62,32 +62,32 @@ document.addEventListener("DOMContentLoaded", function() {
                 Total: <span id="total">${total.toFixed(2)} FCFA</span>
             </div>
         `;
-
+    
         $('#item-list').html(tableString);
         updatePanierCount();
         document.getElementById('total1').value = total.toFixed(2) + " FCFA";
-
+    
         $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché ici
     }
 
     renderTable(); 
 
     $(document).on('click', '.reduce-quantity', function() {
-        let item_id = $(this).data('id');
-        if (panier[item_id]) {
-            panier[item_id][0]--; 
-            if (panier[item_id][0] <= 0) {
-                delete panier[item_id]; 
+        let uniqueKey = $(this).data('id');
+        if (panier[uniqueKey]) {
+            panier[uniqueKey][0]--; 
+            if (panier[uniqueKey][0] <= 0) {
+                delete panier[uniqueKey]; 
             }
             localStorage.setItem('panier', JSON.stringify(panier)); 
             renderTable(); 
         }
     });
-
+    
     $(document).on('click', '.add-quantity', function(){
-        let item_id = $(this).data('id');
-        if (panier[item_id]) {
-            panier[item_id][0]++;
+        let uniqueKey = $(this).data('id');
+        if (panier[uniqueKey]) {
+            panier[uniqueKey][0]++;
         }
         localStorage.setItem('panier', JSON.stringify(panier));
         renderTable();
