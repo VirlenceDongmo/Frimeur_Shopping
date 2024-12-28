@@ -4,48 +4,32 @@
 
 {% block content %}
 
+    <link rel="stylesheet" href="{% static 'css/paiementStyle.css' %}">
+
     <br>
 
     <div class="formulaire">
         <h2>Paiement</h2>
-        <form id="payment-form" class="payment-form">
+        <form id="payment-form" class="payment-form" method="POST">
             <div class="form-group">
                 <label for="payment-method">Méthode de paiement</label>
-                <select id="payment-method" required>
+                <select id="payment-method" name="payment_method" required>
                     <option value="" disabled selected>Sélectionnez une méthode</option>
                     <option value="mtn">MTN Mobile Money</option>
                     <option value="orange">Orange Money</option>
-                    <option value="card">Carte Bancaire</option>
                 </select>
             </div>
     
             <div id="mobile-details" class="payment-details">
                 <div class="form-group">
                     <label for="phone-number">Numéro de téléphone</label>
-                    <input type="text" id="phone-number" required>
-                </div>
-            </div>
-    
-            <div id="card-details" class="payment-details" style="display: none;">
-                <div class="form-group">
-                    <label for="card-number">Numéro de carte</label>
-                    <input type="text" id="card-number" required>
-                </div>
-                <div class="form-group">
-                    <label for="expiry-date">Date d'expiration (MM/AA)</label>
-                    <input type="text" id="expiry-date" placeholder="MM/AA" required>
-                </div>
-                <div class="form-group">
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" required>
+                    <input type="text" id="phone-number" name="phone_number" required>
                 </div>
             </div>
     
             <input type="submit" class="commande" value="Payer">
         </form>
     </div>
-
-    <link rel="stylesheet" href="{% static 'css/paiementStyle.css' %}">
 
 {% endblock %}
 

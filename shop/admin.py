@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Commande, Message, Size, Color
+from .models import Category, Product, Commande, Message, Size, Color, Payment
 
 # Register your models here.
 
@@ -33,9 +33,14 @@ class SizeManager(admin.ModelAdmin) :
     list_display = ('name',)
 
 
+class PaymentManager(admin.ModelAdmin) :
+    list_display = ('user_id','amount', 'commande',)
+
+
 admin.site.register(Category, CategoryManager)
 admin.site.register(Product, ProductManager)
 admin.site.register(Commande, CommandeManager)
 admin.site.register(Message, MessageManager)
 admin.site.register(Color, ColorManager)
 admin.site.register(Size, SizeManager)
+admin.site.register(Payment, PaymentManager)

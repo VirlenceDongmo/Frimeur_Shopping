@@ -107,9 +107,11 @@ class Message(models.Model) :
 class Payment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    card_number = models.CharField(max_length=16, blank=True, null=True)
-    expiry_date = models.CharField(max_length=5, blank=True, null=True)
-    cvv = models.CharField(max_length=3, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('completed', 'Completed')])
+    date_added = models.DateTimeField(auto_now=True)
+    
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    commande = models.OneToOneField(Commande, on_delete=models.CASCADE)
 
+    class Meta :
+
+        ordering = ['-date_added']

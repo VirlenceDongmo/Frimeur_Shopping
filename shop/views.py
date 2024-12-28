@@ -6,14 +6,9 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 import json
 from django.conf import settings
-from shop.API.PaiementMTN.apiDePaiement import PayClass
-import uuid
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
 from .forms import PaymentForm
-import requests
 
-# Create your views here.
+
 
 def index(request) :
 
@@ -40,9 +35,8 @@ def detail(request, myid) :
 
 
 @login_required(login_url='login_view')
-def checkout(request) :
-
-    if(request.method == "POST") :
+def checkout(request):
+    if request.method == "POST":
         user = request.user
         nom = user.nom
         total = request.POST.get('total')
@@ -53,13 +47,21 @@ def checkout(request) :
         items = request.POST.get('items')
         tel = user.telephone
 
-        com = Commande(items = items, total = total, nom = nom, email = email, adresseDeLivraison = adresseDeLivraison, ville = ville, pays = pays, tel = tel, user_id = user)
-        com.save()
+        com = Commande.objects.create(
+            items=items,
+            total=total,
+            nom=nom,
+            email=email,
+            adresseDeLivraison=adresseDeLivraison,
+            ville=ville,
+            pays=pays,
+            tel=tel,
+            user_id=user
+        )
+        
+        request.session['commande_id'] = com.id
 
-        # Convertir les items du panier (JSON) en dictionnaire
         panier = json.loads(items)
-
-        # Préparer les détails de chaque article pour l'e-mail
         article_details = []
         for item_id, details in panier.items():
             nom_article = details[1]
@@ -68,64 +70,32 @@ def checkout(request) :
             image = details[3]
             prix_total = quantite * prix_unitaire
             
-            # Ajoutez les informations à la liste
             article_details.append(f"""*{nom_article} :
                             - Photo : {image},
                             - Quantité: {quantite},
                             - Prix Total: {prix_total:.2f} FCFA""")
 
-        # Convertir la liste en chaîne
         articles_str = "\n".join(article_details)
+        subjectForUs = 'Nouvelle commande'
+        messageForUs = f"""
+        Une nouvelle commande a été passée par {nom} depuis Frimeur-Shopping.
 
-        # Envoyer un email
-
-       # subjectForUs = 'Nouvelle commande'
-       # messageForUs = f"""
-       # Une nouvelle commande a été passée par {nom} depuis Frimeur-Shopping.
-
-        #Détails de la commande :
-
-        #- Email du commanditaire : 
-        #    {email}
-
-        #- Adresse de livraison : 
-        #    {adresseDeLivraison}
-
-        #- Ville de résidence du commanditaire : 
-        #    {ville}
-
-        #- Pays de résidence du commanditaire : 
-        #    {pays}
-
-        #- Numéro de téléphone du commanditaire : 
-        #    {tel}
-
-        #- Somme totale des commandes : 
-        #    {total}
-
-        #- Articles : 
-        #{articles_str}
-
-        #"""
-        #recipient_list = ['dongmofeudjio5@gmail.com']
-
-        #send_mail(subjectForUs, messageForUs, settings.EMAIL_HOST_USER, recipient_list)
-
-        #subjectForHer = 'Demande de confirmation depuis Frimeur-Shopping'
-
-        #messageForHer = f"""
-        #Nous vous sommes reconnaissants pour votre confiance Mr/Mme/Mslle {nom}.
+        Détails de la commande :
+        - Email : {email}
+        - Adresse de livraison : {adresseDeLivraison}
+        - Ville : {ville}
+        - Pays : {pays}
+        - Téléphone : {tel}
+        - Total : {total}
+        - Articles : {articles_str}
+        """
         
-        #Si vous rencontrez des problèmes pour vos opérations sur notre plateforme, à défaut de nous contacter #par email, vous pouvez le faire via notre numéro whatsapp suivant : 6 54 15 81 75 .
-        #"""
+        recipient_list = ['dongmofeudjio5@gmail.com']
+        send_mail(subjectForUs, messageForUs, settings.EMAIL_HOST_USER, recipient_list)
 
-        #recipient_list = {email}
+        return redirect('paiement') 
 
-        #send_mail(subjectForHer,messageForHer,settings.EMAIL_HOST_USER,recipient_list)
-
-        return redirect('paiement')
-
-    return render(request,"shop/checkout.html")
+    return render(request, "shop/checkout.html")
 
 
 def confirmation(request) :
@@ -190,50 +160,40 @@ def contact_view(request):
     return render(request, 'contact.html')
 
 
-@csrf_exempt  # Désactivez la protection CSRF pour cette vue (à utiliser avec précaution)
 def payment_view(request):
     if request.method == 'POST':
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            payment_data = form.cleaned_data
-            payment = Payment.objects.create(
-                amount=payment_data['amount'],
-                phone_number=payment_data.get('phone_number'),
-                card_number=payment_data.get('card_number'),
-                expiry_date=payment_data.get('expiry_date'),
-                cvv=payment_data.get('cvv'),
-                status='pending'
+        user = request.user
+        email = user.email
+        commande_id = request.session.get('commande_id') 
+
+        try:
+            commande = Commande.objects.get(id=commande_id)
+            total = commande.total
+            payment_method = request.POST['payment_method']
+            phone = request.POST['phone_number']
+
+            if payment_method == 'mtn':
+                subject = 'Demande de confirmation depuis Frimeur-Shopping'
+                message = f"Vous avez choisi de payer {total} par MTN Mobile Money. Numéro du compte : 6 54 15 81 75."
+            elif payment_method == 'orange':
+                subject = 'Demande de confirmation depuis Frimeur-Shopping'
+                message = f"Vous avez choisi de payer {total} par Orange Money. Numéro du compte : 6 56 93 19 87."
+
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [email])
+
+            Payment.objects.create(
+                amount= total,
+                phone_number= phone,
+                user_id=user,
+                commande=commande
             )
 
-            if payment_data['payment_method'] == 'mtn':
-                # Appel à l'API MTN Mobile Money
-                response = requests.post('https://api.mtn.com/checkout', json={
-                    'amount': payment_data['amount'],
-                    'phone': payment_data['phone_number']
-                })
-            elif payment_data['payment_method'] == 'orange':
-                # Appel à l'API Orange Money
-                response = requests.post('https://api.orange.com/checkout', json={
-                    'amount': payment_data['amount'],
-                    'phone': payment_data['phone_number']
-                })
-            elif payment_data['payment_method'] == 'card':
-                # Appel à l'API de paiement par carte
-                response = requests.post('https://api.cardpayment.com/checkout', json={
-                    'amount': payment_data['amount'],
-                    'card_number': payment_data['card_number'],
-                    'expiry_date': payment_data['expiry_date'],
-                    'cvv': payment_data['cvv']
-                })
+            messages.success(request, 'Le paiement a été traité avec succès.')
+            return redirect('confirmation')
 
-            if response.status_code == 200:
-                payment.status = 'completed'
-                payment.save()
-               # return redirect('success')  # Redirigez vers une page de succès
-            else:
-                return render(request, 'paiement.html', {'form': form, 'error': response.json().get('message')})
-
-    else:
-        form = PaymentForm()
+        except Commande.DoesNotExist:
+            messages.error(request, 'Commande introuvable.')
+        except Exception as e:
+            messages.error(request, f'Erreur: {str(e)}')
+    form = PaymentForm()
     return render(request, 'shop/paiement.html', {'form': form})
-

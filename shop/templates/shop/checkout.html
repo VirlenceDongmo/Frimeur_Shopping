@@ -38,30 +38,23 @@
 
         <div class="row">
             <div class="col-md-12 formulaire">
-                <form method="POST" action="{% url 'paiement' %}">
+                <form method="POST">
                     {% csrf_token %}
                     <input type="hidden" id="items" name="items">
 
-                <!-- <label for="nom" class="classeLabel">Noms et prénoms</label>
-                    <input type="text" class="form-control classInput" id="nom" name="nom" value="{{request.user.nom}} {{request.user.prenom}}" required>
-
-                    <br>
-                    <label for="email" class="classeLabel">Email</label>
-                    <input name="email" id="email" type="email" class="form-control classInput" value="{{request.user.email}}" required>-->
-
-                    <br>
-                    <label for="adresse" class="classeLabel">Adresse de livraison</label>
-                    <input type="text" class="form-control classInput" id="adresseDeLivraison" name="adresseDeLivraison" required>
-                    
-                    <br>
-                    <label for="ville" class="classeLabel">Ville</label>
-                    <input type="text" class="form-control classInput" id="ville" name="ville" required>
-                    
                     <br>
                     <label for="pays" class="classeLabel">Pays</label>
                     <select id="pays" name="pays" class="form-control classInput">
                         <option selected>Cameroun</option>
                     </select>
+                    
+                    <br>
+                    <label for="ville" class="classeLabel">Ville</label>
+                    <input type="text" class="form-control classInput" id="ville" name="ville" required>
+
+                    <br>
+                    <label for="adresse" class="classeLabel">Adresse de livraison</label>
+                    <input type="text" class="form-control classInput" id="adresseDeLivraison" name="adresseDeLivraison" required>
 
                     <br>
                     <label for="total" class="classeLabel">Somme totale</label>
@@ -72,7 +65,7 @@
                 </form>
             </div>
         </div>
-        <br><br>
+        <br>
     </div>
     
 
