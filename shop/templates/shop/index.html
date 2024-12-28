@@ -27,11 +27,11 @@
                     <img src="{{ product.image.url }}" alt="Image de l'article" class="product card-img-top rounded-custom">
                     <div class="card-body">
                         <div id="aa{{ product.id }}" class="card-title">{{ product.title }}</div>
-                        <div id="price{{ product.id }}" class="card-text">{{ product.price }} <span>FCFA</span></div>
-                        
+                        <div id="price{{ product.id }}" class="card-text badge badge-warning rounded-pill bg-dark text-warning price-badge">{{ product.price }} <span>FCFA</span></div>
+                        <br><br>
                         <!-- Sélecteur de taille -->
-                        <div class="form-group">
-                            <label for="size{{ product.id }}">Taille:</label>
+                        <div class="form-group options">
+                            <label hidden for="size{{ product.id }}">Taille:</label>
                             <select id="size{{ product.id }}" class="form-control">
                                 <option value="" disabled selected>Choisissez une taille</option>
                                 {% for size in product.sizes.all %}
@@ -41,8 +41,8 @@
                         </div>
 
                         <!-- Sélecteur de couleur -->
-                        <div class="form-group">
-                            <label for="color{{ product.id }}">Couleur:</label>
+                        <div class="form-group options">
+                            <label hidden for="color{{ product.id }}">Couleur:</label>
                             <select id="color{{ product.id }}" class="form-control">
                                 <option value="" disabled selected>Choisissez une couleur</option>
                                 {% for color in product.colors.all %}

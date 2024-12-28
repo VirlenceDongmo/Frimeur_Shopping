@@ -1,12 +1,84 @@
-{% extends 'base.html' %}
+
+{% extends "shop/base.html" %}
+
+{% load static %}
 
 {% block content %}
-    <h1> {{user.email}}, vous pouvez ici modifier vos informations</h1>
-    <br>
-    <form action="." method="post" enctype="multipart/form-data">
-        {{user_form.as_p}}
-        {{profile_form.as_p}}
-        {% csrf_token %}
-        <button type="submit">Modifier</button>
-    </form>
+    <style>
+        .profile {
+            max-width: 800px;
+            margin: auto;
+            background-color: inherit;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        legend {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .sauvegarde {
+            display: block;
+            width: 100%;
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: white;
+        }
+        .sauvegarde:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+    </style>
+
+    <div class="container profile">
+        <h1>Modifier Mon Profil</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Informations Utilisateur</legend>
+                {{ user_form.as_p }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Informations de Profil</legend>
+                {{ profile_form.as_p }}
+            </fieldset>
+            
+            <button type="submit" class="btn sauvegarde">Sauvegarder les modifications</button>
+        </form>
+    </div>
 {% endblock %}

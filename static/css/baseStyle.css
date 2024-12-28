@@ -1,44 +1,30 @@
-
-
-/*.dropdown-menu {
-    background-color: #ffffff; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #003366; 
+    color: white; 
 }
-
-
-.btn-secondary {
-    background-color: rgb(241, 241, 172);
-    color: black;
-    border: none; 
-    transition: background-color 0.3s; 
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268; 
-}
-
-.custom-container {
-    flex: 1; 
-}
-
-.custom-container {
-    max-width: 90%; 
-    margin: 0 auto;
-}  */
-
 
 footer {
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 table {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: 0 auto;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     color: black;
+}
+
+.totalDesCommandes {
+    display: inline-block; 
+    margin: 0 auto;
+    padding: 10px;
+    background-color: black;
+    color: yellow;
+    text-align: center;
 }
 
 thead {
@@ -64,17 +50,6 @@ th {
     padding: 12px;
 }
 
-/* -------------------------------style ok--------------------------------*/
-
-
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #003366 ; 
-    color: white; 
-}
-
 /*---------------------------Pour la navbar----------------------*/
 
 .navbar {
@@ -86,20 +61,13 @@ body {
 .navbar-brand {
     color: yellow;
     font-size: 3vh;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin: 0 5%;
 }
 
 .navbar-nav {
     display: flex;
     flex-direction: row; 
-}
-
-.navbar-nav li {
-    padding: 0.001rem;
-    border-radius: 10%;
-    background-color: #0056b3;
-    margin: 0 5px;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
 }
 
 .navbar-nav .nav-link {
@@ -113,11 +81,14 @@ body {
     color: #f1c40f; 
 }
 
-
-.dropdown-menu {
+.options {
     background-color: #34495e; 
     border-radius: 8px; 
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+}
+
+.options:hover {
+    background-color: black;
 }
 
 .dropdown-item {
@@ -129,39 +100,100 @@ body {
     color: black; 
 }
 
-.btn-secondary {
-    background-color: rgb(241, 241, 172); 
-    color: black;
-    border: none; 
-    transition: background-color 0.3s; 
-}
-
 .btn-secondary:hover {
     background-color: #5a6268; 
 }
 
+/* Media Queries for different devices */
 
+/* Smartphones (max-width: 767px) */
+@media (max-width: 767px) {
+    .navbar-brand {
+        font-size: 2.5vh;
+    }
 
-/*.btn-secondary {
-    background-color: rgb(241, 241, 172); 
-    color: black;
-    border: none; 
-    transition: background-color 0.3s; 
-} 
+    .navbar-nav {
+        flex-direction: column;
+        align-items: center; /* Centrer les éléments */
+    }
 
-.btn-secondary:hover {
-    background-color: #5a6268; 
-} */
+    .navbar-nav .nav-link {
+        font-size: 1rem;
+        margin-left: 0; /* Supprimer le margin gauche */
+        margin-bottom: 10px; /* Espacement entre les liens */
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #f1c40f; 
+    }
+    
+    .options {
+        background-color: #34495e; 
+        border-radius: 8px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+    }
+    
+    .options:hover {
+        background-color: black;
+    }
+    
+    .dropdown-item {
+        color: #ffffff; 
+    }
+    
+    .dropdown-item:hover {
+        background-color: #f1c40f; 
+        color: black; 
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
+}
+
+/* Tablettes (768px à 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .navbar-brand {
+        font-size: 2.8vh;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1.1rem;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #f1c40f; 
+    }
+    
+    .options {
+        background-color: #34495e; 
+        border-radius: 8px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+    }
+    
+    .options:hover {
+        background-color: black;
+    }
+    
+    .dropdown-item {
+        color: #ffffff; 
+    }
+    
+    .dropdown-item:hover {
+        background-color: #f1c40f; 
+        color: black; 
+    }
+}
 
 /*---------------------Pour les formulaires---------------------------------*/
-
 
 form {
     background-color: #34495e;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
+    margin: 20px auto; /* Centrer le formulaire */
+    max-width: 90%; /* Largeur maximale pour petit écran */
 }
 
 .form-control {
@@ -170,7 +202,6 @@ form {
     transition: border-color 0.3s;
     font-size: 1rem; 
     padding: 0.5rem; 
-    transition: font-size 0.3s ease; 
 }
 
 .formulaire {
@@ -207,35 +238,34 @@ input[type="text"]:focus, select:focus {
     outline: none;
 }
 
-
 /*--------------------------Pour les articles--------------------*/
 .product {
-    width: 100%; /* L'image prend 100% de la largeur de son conteneur */
-    height: auto; /* Hauteur automatique pour conserver le ratio */
+    width: 100%; 
+    height: auto; 
 }
 
 .card {
-    margin: 15px; /* Espacement entre les cartes */
+    margin: 15px; 
     background-color: inherit;
 }
 
 .card-title {
-    font-size: 1.5vw; /* Taille de police adaptative */
+    font-size: 1.5vw; 
     margin-bottom: 10px;
 }
 
 .card-text {
-    font-size: 1.2vw; /* Taille de police adaptative */
+    font-size: 1.2vw; 
 }
 
 .card-img-top {
-    max-width: 100%;
+    width: 100%;
 }
 
 .btn {
-    width: 100%; /* Les boutons prennent 100% de la largeur */
-    padding: 0.5vw; /* Padding adaptatif */
-    font-size: 1.5vw; /* Taille de police adaptative */
+    width: 100%; 
+    padding: 0.5vw; 
+    font-size: 1.5vw; 
 }
 
 .btn-warning {
@@ -248,6 +278,9 @@ input[type="text"]:focus, select:focus {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+    body {
+        font-size: 3vw;
+    }
     .card-title {
         font-size: 4vw; /* Taille de police plus grande pour petits écrans */
     }
@@ -263,12 +296,11 @@ input[type="text"]:focus, select:focus {
 }
 
 .about-section {
-    padding: 60px 0;
+    padding: 60px 15px; /* Espacement responsive */
 }
 .about-title {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: #007bff;
     text-align: center;
 }
 .about-content {
@@ -278,33 +310,33 @@ input[type="text"]:focus, select:focus {
 /*----------------------------style des messages du backend-------------------------*/
 
 .messages {
-    display: inline-block; /* Permet au fond de s'ajuster à la taille du message */
-    list-style-type: none; /* Supprime les puces de la liste */
-    padding: 0; /* Supprime le padding par défaut */
-    margin: 0; /* Supprime la marge par défaut */
+    display: inline-block; 
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
 }
 
 .messages li {
-    padding: 15px; /* Espacement interne */
-    margin-bottom: 10px; /* Espacement entre les messages */
-    border-radius: 5px; /* Coins arrondis */
-    font-size: 1.1rem; /* Taille de police */
+    padding: 15px; 
+    margin-bottom: 10px; 
+    border-radius: 5px; 
+    font-size: 1.1rem; 
 }
 
 .messages li.success {
-    background-color: #d4edda; /* Vert clair */
-    color: #155724; /* Texte vert foncé */
-    border: 1px solid #c3e6cb; /* Bordure verte */
+    background-color: #d4edda; 
+    color: #155724; 
+    border: 1px solid #c3e6cb; 
 }
 
 .messages li.error {
-    background-color: #f8d7da; /* Rouge clair */
-    color: #721c24; /* Texte rouge foncé */
-    border: 1px solid #f5c6cb; /* Bordure rouge */
+    background-color: #f8d7da;
+    color: #721c24; 
+    border: 1px solid #f5c6cb; 
 }
 
 .messages li.warning {
-    background-color: #fff3cd; /* Jaune clair */
-    color: #856404; /* Texte jaune foncé */
-    border: 1px solid #ffeeba; /* Bordure jaune */
+    background-color: #fff3cd; 
+    color: #856404; 
+    border: 1px solid #ffeeba; 
 }

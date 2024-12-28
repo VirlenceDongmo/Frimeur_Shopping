@@ -14,6 +14,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     updatePanierCount();
 
+    if(Object.keys(panier).length == 0) {
+        $('#formulaireDeCommande').hide()
+    }
+
     function renderTable() {
         let total = 0;
         let tableString = `
@@ -58,10 +62,9 @@ document.addEventListener("DOMContentLoaded", function() {
         tableString += `
                 </tbody>
             </table>
-            <div>
-                Total: <span id="total">${total.toFixed(2)} FCFA</span>
-            </div>
         `;
+
+        $('.totalDesCommandes').text('Total = ' + total.toFixed(2) + ' FCFA');
     
         $('#item-list').html(tableString);
         updatePanierCount();

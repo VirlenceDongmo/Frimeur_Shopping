@@ -14,80 +14,66 @@
             </ol>
         </div>
     </div>
-
-    <div>
-        <br> <br>
-        <h5 class="text-center">Pour commander, veuillez remplir et soumettre le formulaire ci-dessous.</h5>
-        <br> <br>
+    <br>
+    <div class="totalDesCommandes">
+        
     </div>
+    <div id="formulaireDeCommande">
 
-    {% if messages %}
-        <div class="text-center">
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
+        <div>
+            <br>
+            <h5 class="text-center">Pour commander, veuillez remplir et soumettre le formulaire ci-dessous.</h5>
+            <br> 
         </div>
-    {% endif %}
 
-    <div class="row">
-        <div class="col-md-12 formulaire">
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" id="items" name="items">
+        {% if messages %}
+            <div class="text-center">
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
-               <!-- <label for="nom" class="classeLabel">Noms et prénoms</label>
-                <input type="text" class="form-control classInput" id="nom" name="nom" value="{{request.user.nom}} {{request.user.prenom}}" required>
+        <div class="row">
+            <div class="col-md-12 formulaire">
+                <form method="POST" action="{% url 'paiement' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="items" name="items">
 
-                <br>
-                <label for="email" class="classeLabel">Email</label>
-                <input name="email" id="email" type="email" class="form-control classInput" value="{{request.user.email}}" required>-->
+                <!-- <label for="nom" class="classeLabel">Noms et prénoms</label>
+                    <input type="text" class="form-control classInput" id="nom" name="nom" value="{{request.user.nom}} {{request.user.prenom}}" required>
 
-                <br>
-                <label for="adresse" class="classeLabel">Adresse de livraison</label>
-                <input type="text" class="form-control classInput" id="adresseDeLivraison" name="adresseDeLivraison" required>
-                
-                <br>
-                <label for="ville" class="classeLabel">Ville</label>
-                <input type="text" class="form-control classInput" id="ville" name="ville" required>
-                
-                <br>
-                <label for="pays" class="classeLabel">Pays</label>
-                <select id="pays" name="pays" class="form-control classInput">
-                    <option selected>Cameroun</option>
-                    <!--<option>Tchad</option>
-                    <option>Benin</option>
-                    <option>Burkina Faso</option>-->
-                </select>
-                <br>
-                
-               <!-- <label for="tel" class="classeLabel">Numéro de téléphone</label>
-                <input type="text" class="form-control classInput" id="tel" name="tel" value="{{request.user.telephone}}" required>
-                <br>-->
-                
-                <!--<label for="paiement" class="classeLabel">Mode de paiement</label>
-                <div>
                     <br>
-                    <input type="radio" id="mtn" name="paiement" value="MTN Mobile Money">
-                    <label for="mtn" style="color: white;">MTN Mobile Money</label>
-                </div>
-                <div>
+                    <label for="email" class="classeLabel">Email</label>
+                    <input name="email" id="email" type="email" class="form-control classInput" value="{{request.user.email}}" required>-->
+
                     <br>
-                    <input type="radio" id="orange" name="paiement" value="Orange Money">
-                    <label for="orange" style="color: white;">Orange Money</label>
-                </div>-->
+                    <label for="adresse" class="classeLabel">Adresse de livraison</label>
+                    <input type="text" class="form-control classInput" id="adresseDeLivraison" name="adresseDeLivraison" required>
+                    
+                    <br>
+                    <label for="ville" class="classeLabel">Ville</label>
+                    <input type="text" class="form-control classInput" id="ville" name="ville" required>
+                    
+                    <br>
+                    <label for="pays" class="classeLabel">Pays</label>
+                    <select id="pays" name="pays" class="form-control classInput">
+                        <option selected>Cameroun</option>
+                    </select>
 
-                <br>
-                <label for="total" class="classeLabel">Somme totale</label>
-                <input name="total" type="text" class="form-control bg-dark text-warning" id="total1" readonly>
+                    <br>
+                    <label for="total" class="classeLabel">Somme totale</label>
+                    <input name="total" type="text" class="form-control bg-dark text-warning" id="total1" readonly>
 
-                <br>
-                <button type="submit" class="btn btn-primary">Commander</button>
-            </form>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Commander</button>
+                </form>
+            </div>
         </div>
+        <br><br>
     </div>
-    <br><br>
     
 
 {% endblock %}

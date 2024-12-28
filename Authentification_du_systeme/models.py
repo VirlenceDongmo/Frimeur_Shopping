@@ -33,6 +33,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.nom
+    
+    
 
 class Profile(models.Model):
     bio = models.TextField(max_length=200, blank=True, null=True)

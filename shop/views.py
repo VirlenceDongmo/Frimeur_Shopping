@@ -229,7 +229,7 @@ def payment_view(request):
             if response.status_code == 200:
                 payment.status = 'completed'
                 payment.save()
-                return redirect('success')  # Redirigez vers une page de succès
+               # return redirect('success')  # Redirigez vers une page de succès
             else:
                 return render(request, 'paiement.html', {'form': form, 'error': response.json().get('message')})
 

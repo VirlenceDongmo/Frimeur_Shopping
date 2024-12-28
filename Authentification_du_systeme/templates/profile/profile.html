@@ -1,0 +1,152 @@
+{% extends "shop/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <style>
+        .profile {
+            max-width: 900px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .profile-image {
+            flex: 1;
+            text-align: center;
+        }
+        .profile-image img {
+            max-width: 150px;
+            border-radius: 75px;
+            border: 2px solid #ddd;
+            margin-bottom: 15px;
+        }
+        .profile-info {
+            flex: 2;
+            margin-left: 20px;
+        }
+        .profile-info label {
+            font-weight: bold;
+            color: black;
+        }
+        .profile-info p {
+            margin: 5px 0;
+        }
+        .order-history {
+            margin-top: 40px;
+        }
+        .order {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .order:last-child {
+            border-bottom: none;
+        }
+        .order p {
+            margin: 5px 0;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        @media (max-width: 600px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+            }
+            .profile-info {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <div class="container profile">
+        <h1>Mon Profil</h1>
+        <div class="profile-header">
+            <div class="profile-image">
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="Image de profil">
+                {% else %}
+                    <p>Aucune image de profil disponible.</p>
+                {% endif %}
+            </div>
+            <div class="profile-info">
+                <label for="nom">Nom :</label>
+                <p id="nom">{{ request.user.nom }}</p>
+                <br>
+
+                <label for="prenom">Prénom :</label>
+                <p id="prenom">{{ request.user.prenom }}</p>
+                <br>
+
+                <label for="email">Email :</label>
+                <p id="email">{{ request.user.email }}</p>
+                <br>
+
+                <label for="telephone">Téléphone :</label>
+                <p id="telephone">{{ request.user.telephone }}</p>
+                <br>
+
+                <label for="bio">Biographie :</label>
+                <p id="bio">{{ request.user.profile.bio }}</p>
+                <br>
+                <label for="birthday">Date de naissance :</label>
+                <p id="birthday">{{ request.user.profile.birthday }}</p>
+                
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'edit_profile' %}" class="btn">Modifier mon profil</a>
+        </div>
+
+        <div class="order-history">
+            <h1>Historique des Commandes</h1>
+            {% if commandes %}
+                {% for commande in commandes %}
+                <div class="order">
+                    <p><strong>Commande {{ commande.id }}</strong> - {{ commande.date_commande }}</p>
+                    <p>Statut : {{ commande.status }}</p>
+                    <p>Articles : {{ commande.items }}</p>
+                    <p>Total : {{ commande.total }}</p>
+                    <p>Adresse de livraison : {{ commande.adresseDeLivraison }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center;">Vous n'avez encore initialisé aucune commande.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'javascript/checkoutJs.js' %}"></script>
+{% endblock %}

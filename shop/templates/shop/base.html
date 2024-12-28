@@ -28,7 +28,7 @@
                                 <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories</a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <div class="dropdown-menu options" aria-labelledby="navbarDropdownMenuLink">
                                         <a class="dropdown-item" href="{% url 'home' %}">Tous les articles</a>
                                         <a class="dropdown-item" href="{% url 'categorie' 'Sac' %}">Sacs</a>
                                         <a class="dropdown-item" href="{% url 'categorie' 'Montre' %}">Montres</a>
@@ -40,7 +40,7 @@
                                 <li class="nav-item"><a class="nav-link" href="{% url 'logout_view' %}">Déconnexion</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">A propos</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
-                                <!--<li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>-->
+                                <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
                             {% else %}
                                 <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
                                 <li class="nav-item dropdown">
@@ -58,7 +58,7 @@
                                 <li class="nav-item"><a class="nav-link" href="{% url 'login_view' %}">Connexion</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">A propos</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
-                                <!--<li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>-->
+                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a></li>
                             {% endif %}
                         </ul>
                     </div>

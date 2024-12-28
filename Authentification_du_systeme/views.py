@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from Authentification_du_systeme.forms import RegistrationForm, UserEditForm, ProfileEditForm
+from Authentification_du_systeme.forms import  UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, CustomUser
 from django.contrib import messages
+from shop.models import Commande
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 # Create your views here.
 
@@ -70,28 +75,46 @@ def register_view(request):
     return render(request, 'registration/register.html')
 
 
-@login_required
-def dashboard (request) :
-    user = Profile.objects.filter(user=request.user).first()
-    return render(request, 'profile/dashboard.html', {'user':user})
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
 
-@login_required
-def edit_profile(request) :
-    if request.method == "POST" :
-        user_form = UserEditForm(instance=request.user, data=request.POST,)
+
+@login_required(login_url='login_view')
+def profile_view(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = None 
+
+    context = {
+        'profile': profile,
+        'commandes': Commande.objects.filter(email=request.user.email),
+    }
+    return render(request, 'profile/profile.html', context)
+
+
+@login_required(login_url='login_view')
+def edit_profile(request):
+    if request.method == "POST":
+        user_form = UserEditForm(instance=request.user, data=request.POST)
         profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
 
-        if user_form.is_valid() and profile_form.is_valid() :
-            user_form.save
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()  
             profile_form.save()
-            return redirect('dashboard')
+            return redirect('profile') 
 
-    else :
+    else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
-    return render(request, 'profile/edit.html', {'user_form' : user_form, 
-                                              'profile_form':profile_form})
+
+    return render(request, 'profile/edit.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
             
 
 
