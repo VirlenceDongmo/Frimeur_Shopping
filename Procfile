@@ -1,0 +1,1 @@
+web: gunicorn FrimeurShopping.wsgi --log-file
