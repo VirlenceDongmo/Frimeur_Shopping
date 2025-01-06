@@ -17,17 +17,19 @@
                     <option value="" disabled selected>Sélectionnez une méthode</option>
                     <option value="mtn">MTN Mobile Money</option>
                     <option value="orange">Orange Money</option>
+                    <option value="paypal">PayPal</option>
                 </select>
             </div>
     
-            <div id="mobile-details" class="payment-details">
+            <div id="mobile-details" class="payment-details" style="display: none;">
                 <div class="form-group">
                     <label for="phone-number">Numéro de téléphone</label>
                     <input type="text" id="phone-number" name="phone_number" required>
                 </div>
             </div>
+
+            <button type="button" class="commande" id="submit-button">Payer</button>
     
-            <input type="submit" class="commande" value="Payer">
         </form>
     </div>
 

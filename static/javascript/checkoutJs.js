@@ -102,4 +102,9 @@ document.addEventListener("DOMContentLoaded", function() {
     $('form').on('submit', function() {
         $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché avant la soumission
     });
+
+    totalcom = parseFloat(total)
+
+    localStorage.setItem('totalcom', total.toFixed(2));
+
 });

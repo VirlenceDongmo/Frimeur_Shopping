@@ -197,3 +197,8 @@ def payment_view(request):
             messages.error(request, f'Erreur: {str(e)}')
     form = PaymentForm()
     return render(request, 'shop/paiement.html', {'form': form})
+
+
+
+def paypal_payment(request):
+    return render(request, 'shop/paypalPayment.html')
