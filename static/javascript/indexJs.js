@@ -36,7 +36,11 @@ $(document).on('click', '.ted', function() {
         var prix = parseFloat(document.getElementById('price' + item_id).innerHTML);
         var nom = document.getElementById("aa" + item_id).innerHTML;
         panier[uniqueKey] = [1, nom, prix, imageUrl, color, size];
+
+        alert("Article ajouté avec succès")
+        
     }
+
     
     localStorage.setItem('panier', JSON.stringify(panier));
     updatePanierCount();

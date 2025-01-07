@@ -52,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     <td>${quantite}</td>
                     <td>${prixTotal.toFixed(2)} FCFA</td>
                     <td>
-                        <span><button class="btn btn-success add-quantity" data-id="${uniqueKey}">Augmenter</button></span>
-                        <span><button class="btn btn-danger reduce-quantity" data-id="${uniqueKey}">Réduire</button></span>
+                        <span><button class="btn btn-success add-quantity" data-id="${uniqueKey}">+</button></span>
+                        <span><button class="btn btn-danger reduce-quantity" data-id="${uniqueKey}">-</button></span>
                     </td>
                 </tr>
             `;
@@ -65,12 +65,17 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
 
         $('.totalDesCommandes').text('Total = ' + total.toFixed(2) + ' FCFA');
+
+        localStorage.setItem('totalcom', total)
     
         $('#item-list').html(tableString);
+
         updatePanierCount();
         document.getElementById('total1').value = total.toFixed(2) + " FCFA";
     
         $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché ici
+
+        console.log(total)
     }
 
     renderTable(); 
@@ -102,9 +107,5 @@ document.addEventListener("DOMContentLoaded", function() {
     $('form').on('submit', function() {
         $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché avant la soumission
     });
-
-    totalcom = parseFloat(total)
-
-    localStorage.setItem('totalcom', total.toFixed(2));
 
 });
