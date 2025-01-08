@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.conf import settings
 from .forms import PaymentForm
+import re
 
 
 
@@ -19,7 +20,7 @@ def index(request) :
     if item_name != '' and item_name is not None :
         product_object = Product.objects.filter(title__icontains = item_name)
 
-    paginator = Paginator(product_object, 4)
+    paginator = Paginator(product_object, 8)
     page = request.GET.get('page')
 
     product_object = paginator.get_page(page)
@@ -164,28 +165,43 @@ def payment_view(request):
     if request.method == 'POST':
         user = request.user
         email = user.email
-        commande_id = request.session.get('commande_id') 
+        phone = user.telephone
+        commande_id = request.session.get('commande_id')
 
         try:
             commande = Commande.objects.get(id=commande_id)
-            total = commande.total
+            total_str = commande.total  
+            
+            # Remove non-numeric characters, keeping the decimal point
+            total_cleaned = re.sub(r'[^\d.]', '', total_str)  
+            
+            total = float(total_cleaned)
+            
             payment_method = request.POST['payment_method']
             phone = request.POST['phone_number']
 
             if payment_method == 'mtn':
                 subject = 'Demande de confirmation depuis Frimeur-Shopping'
-                message = f"Vous avez choisi de payer {total} par MTN Mobile Money. Numéro du compte : 6 54 15 81 75."
+                message = (
+                    f"Vous avez choisi de payer {total} par MTN Mobile Money. "
+                    "Numéro du compte : 6 54 15 81 75. "
+                    "Nom du compte : Dongmo Feudjio Divin Virlence."
+                )
             elif payment_method == 'orange':
                 subject = 'Demande de confirmation depuis Frimeur-Shopping'
-                message = f"Vous avez choisi de payer {total} par Orange Money. Numéro du compte : 6 56 93 19 87."
+                message = (
+                    f"Vous avez choisi de payer {total} par Orange Money. "
+                    "Numéro du compte : 6 56 93 19 87. "
+                    "Nom du compte : Dongmo Feudjio Divin Virlence."
+                )
 
             send_mail(subject, message, settings.EMAIL_HOST_USER, [email])
 
             Payment.objects.create(
-                amount= total,
-                phone_number= phone,
-                user_id=user,
-                commande=commande
+                amount=total,
+                phone_number=phone,
+                user_id=user, 
+                commande=commande  
             )
 
             messages.success(request, 'Le paiement a été traité avec succès.')
@@ -195,10 +211,9 @@ def payment_view(request):
             messages.error(request, 'Commande introuvable.')
         except Exception as e:
             messages.error(request, f'Erreur: {str(e)}')
+
     form = PaymentForm()
     return render(request, 'shop/paiement.html', {'form': form})
-
-
 
 def paypal_payment(request):
     return render(request, 'shop/paypalPayment.html')

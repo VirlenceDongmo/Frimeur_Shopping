@@ -10,7 +10,8 @@
 
     <div class="formulaire">
         <h2>Paiement</h2>
-        <form id="payment-form" class="payment-form" method="POST">
+        <form id="payment-form" class="payment-form" method="POST" action="{% url 'paiement' %}">
+            {% csrf_token %} 
             <div class="form-group">
                 <label for="payment-method">Méthode de paiement</label>
                 <select id="payment-method" name="payment_method" required>

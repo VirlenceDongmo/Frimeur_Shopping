@@ -75,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
         $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché ici
 
-        console.log(total)
     }
 
     renderTable(); 
