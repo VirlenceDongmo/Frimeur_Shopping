@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
         $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché ici
 
+
     }
 
     renderTable(); 
@@ -107,4 +108,8 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#items').val(JSON.stringify(panier)); // Met à jour le champ caché avant la soumission
     });
 
+
+    document.getElementById('comma').addEventListener('click',() => {
+        localStorage.removeItem('panier');
+    })
 });

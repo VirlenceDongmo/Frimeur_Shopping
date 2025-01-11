@@ -51,7 +51,7 @@
                             </select>
                         </div>
             
-                        <a href="{{ product.id }}" class="btn btn-warning">Description</a>
+                        <a href="{% url 'detail' product.id %}" class="btn btn-warning">Description</a>
                         <button id="{{ product.id }}" class="btn btn-success ted" data-image="{{ product.image.url }}">Ajouter</button>
                     </div>
                 </div>
@@ -85,4 +85,5 @@
     <script src="{% static 'javascript/indexJs.js' %}"></script>
 
 {% endblock %}
-        
+     
+

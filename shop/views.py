@@ -204,7 +204,6 @@ def payment_view(request):
                 commande=commande  
             )
 
-            messages.success(request, 'Le paiement a été traité avec succès.')
             return redirect('confirmation')
 
         except Commande.DoesNotExist:
